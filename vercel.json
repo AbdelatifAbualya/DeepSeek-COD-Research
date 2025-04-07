@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/research.py",
+      "use": "@vercel/python",
+       "config": { "maxLambdaSize": "45mb" } // Increase size if needed for libraries
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/research",
+      "dest": "/api/research.py"
+    },
+    {
+       "src": "/(.*)",
+       "dest": "/index.html"
+     }
+  ],
+   "env": {
+     "BRAVE_API_KEY": "@brave_api_key",
+     "FIREWORKS_API_KEY": "@fireworks_api_key", // Add Fireworks key
+     "PERPLEXITY_API_KEY": "@perplexity_api_key" // Add Perplexity key
+     // Add other secrets as needed
+   }
+}
