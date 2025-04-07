@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeepSeek COD Research - MCP Enhanced</title>
+    <title>Advanced Research Agent</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-     <script>
+    <script>
         tailwind.config = {
-            darkMode: 'class', // Enable class-based dark mode
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -48,503 +45,396 @@
         .markdown-content ol { list-style-type: decimal; }
         .markdown-content pre { background-color: #f0f0f0; padding: 0.75rem; border-radius: 0.25rem; margin-bottom: 0.75rem; overflow-x: auto; }
         .dark .markdown-content pre { background-color: #2d2d2d; }
-        .markdown-content code { font-family: monospace; background-color: rgba(100,100,100,0.1); padding: 0.1rem 0.3rem; border-radius: 0.2rem;}
-        .dark .markdown-content code { background-color: rgba(200,200,200,0.1); }
-        .markdown-content blockquote { border-left: 4px solid #ddd; padding-left: 1rem; margin-left: 0; margin-bottom: 0.75rem; font-style: italic; color: #6b7280;}
-        .dark .markdown-content blockquote { border-left-color: #555; color: #9ca3af; }
-        .markdown-content img { max-width: 100%; height: auto; margin: 1rem 0; border-radius: 0.5rem; }
+        .markdown-content code { font-family: monospace; }
+        .markdown-content blockquote { border-left: 4px solid #ddd; padding-left: 1rem; margin-left: 0; margin-bottom: 0.75rem; }
+        .dark .markdown-content blockquote { border-left-color: #555; }
+        .markdown-content img { max-width: 100%; height: auto; margin: 1rem 0; }
         .markdown-content table { border-collapse: collapse; margin-bottom: 0.75rem; width: 100%; }
         .markdown-content th, .markdown-content td { border: 1px solid #ddd; padding: 0.5rem; }
         .dark .markdown-content th, .dark .markdown-content td { border-color: #555; }
-
+        
         /* Step timeline indicators */
-        .timeline-step { position: relative; padding-left: 2rem; padding-bottom: 1.5rem; }
-        .timeline-line { position: absolute; left: 0.75rem; top: 1.5rem; bottom: 0; width: 2px; background-color: #5D5CDE; }
-        .timeline-step:last-child .timeline-line { display: none; }
-        .timeline-indicator { position: absolute; left: 0; top: 0; width: 1.5rem; height: 1.5rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; }
-
+        .timeline-container {
+            position: relative;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 15px;
+            top: 24px;
+            bottom: 0;
+            width: 2px;
+            background-color: #5D5CDE;
+        }
+        
+        .timeline-step:last-child .timeline-line {
+            display: none;
+        }
+        
         /* Typing animation */
-        .typing-animation::after { content: "|"; animation: blink 1s step-end infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
-
+        .typing-animation::after {
+            content: "|";
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Progress bar animation */
+        @keyframes progress {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        .animate-progress {
+            animation: progress var(--duration, 5s) linear forwards;
+        }
+        
         /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.5); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.7); }
-        .dark ::-webkit-scrollbar-thumb { background: rgba(75, 85, 99, 0.5); }
-        .dark ::-webkit-scrollbar-thumb:hover { background: rgba(75, 85, 99, 0.7); }
-
-        /* Added fade-in animation */
-         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
-
-        /* TailwindCSS Custom Forms plugin styles (basic implementation) */
-        input[type='checkbox'] {
-            border-radius: 0.25rem;
-            border-color: #D1D5DB; /* gray-300 */
-            color: #5D5CDE; /* primary */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
-        .dark input[type='checkbox'] {
-             border-color: #4B5563; /* gray-600 */
-             background-color: #374151; /* gray-700 */
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
-        input[type='checkbox']:checked {
-            border-color: transparent;
-            background-color: currentColor;
-            background-size: 100% 100%;
-            background-position: center;
-            background-repeat: no-repeat;
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 4px;
         }
-         input[type='checkbox']:focus {
-            outline: 2px solid transparent;
-            outline-offset: 2px;
-            --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
-            --tw-ring-offset-width: 2px;
-            --tw-ring-offset-color: #fff;
-            --tw-ring-color: #5D5CDE; /* primary */
-            --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-            --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-            box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-         }
-
-         select {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.5rem center;
-            background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-            appearance: none;
-         }
-         .dark select {
-             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-         }
-
-        /* MCP Agent cards styling */
-        .agent-card {
-            transition: all 0.3s ease;
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.7);
         }
-        .agent-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: rgba(75, 85, 99, 0.5);
         }
-        .agent-selected {
-            border: 2px solid #5D5CDE;
-            background-color: rgba(93, 92, 222, 0.05);
+        
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: rgba(75, 85, 99, 0.7);
         }
     </style>
 </head>
-<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text transition-colors duration-300 font-sans">
+<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text transition-colors duration-300">
     <div class="min-h-screen flex flex-col">
-        <header class="border-b border-gray-200 dark:border-gray-700 bg-light-card dark:bg-dark-card shadow-sm sticky top-0 z-50">
+        <header class="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-dark-card shadow-sm z-10">
             <div class="container max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                         <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        <path d="M19.9 13.5a9 9 0 1 1-9-9 9 9 0 0 1 9 9Z"></path>
+                        <path d="M12 4.5V9"></path>
+                        <path d="M9 2h6"></path>
+                        <path d="M19.5 13.5 16 17"></path>
                     </svg>
-                    <h1 class="text-xl md:text-2xl font-bold">DeepSeek COD Research</h1>
+                    <h1 class="text-xl md:text-2xl font-bold">Advanced Research Agent</h1>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <span class="hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
-                        <span class="h-2 w-2 rounded-full bg-green-500 mr-1"></span>
-                        MCP Enabled
-                    </span>
-                    <button id="themeToggle" aria-label="Toggle Dark Mode" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                         <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                         <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-300 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    </button>
-                </div>
+                <button id="themeToggle" class="flex items-center justify-center w-10 h-10 rounded-full bg-light-input dark:bg-dark-input hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <!-- Moon icon for light mode -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                    </svg>
+                    <!-- Sun icon for dark mode -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-300 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2"></path>
+                        <path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path>
+                        <path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path>
+                        <path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                </button>
             </div>
         </header>
 
         <main class="flex-1 container max-w-6xl mx-auto px-4 py-8">
+            <!-- Introduction Card -->
             <section id="introCard" class="bg-light-card dark:bg-dark-card rounded-xl p-6 mb-8 shadow-md transition-all duration-300">
-                 <div class="flex items-center justify-center">
-                     <div class="text-center">
-                         <div class="flex items-center justify-center mb-4">
-                             <div class="rounded-full bg-primary/10 p-3 text-primary mr-3">
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
-                             </div>
-                             <h2 class="text-2xl md:text-3xl font-bold">Start Your Research</h2>
-                         </div>
-                         <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">Define your research topic and configure the MCP-powered agents to begin the investigation.</p>
-                          <button id="showInputBtn" class="bg-primary hover:bg-primaryDark text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
-                             Configure Research
-                          </button>
-                     </div>
-                 </div>
+                <div class="flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="flex items-center justify-center mb-4">
+                            <div class="rounded-full bg-primary/10 p-3 text-primary mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19.9 13.5a9 9 0 1 1-9-9 9 9 0 0 1 9 9Z"></path>
+                                    <path d="M12 4.5V9"></path>
+                                    <path d="M9 2h6"></path>
+                                    <path d="M19.5 13.5 16 17"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-2xl md:text-3xl font-bold">Advanced Research Agent</h2>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Conduct comprehensive research on any topic with an AI-powered agent that breaks down complex subjects, explores them thoroughly, and synthesizes findings into a detailed report.</p>
+                    </div>
+                </div>
             </section>
 
-            <section id="inputSection" class="hidden bg-light-card dark:bg-dark-card rounded-xl p-6 mb-8 shadow-md transition-all duration-300">
+            <!-- Input Section -->
+            <section id="inputSection" class="bg-light-card dark:bg-dark-card rounded-xl p-6 mb-8 shadow-md transition-all duration-300">
                 <h2 class="text-xl font-bold mb-4 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        <path d="m12 19-2 2-2-2"></path>
+                        <path d="M4 4v9a4 4 0 0 0 4 4h12"></path>
+                        <path d="m8 17 4 4 4-4"></path>
+                        <path d="M5 8h14"></path>
+                        <path d="M5 12h4"></path>
                     </svg>
                     Research Configuration
                 </h2>
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div>
-                         <label for="researchTopic" class="block text-sm font-medium mb-2">Research Topic</label>
-                         <textarea id="researchTopic" rows="4" placeholder="Enter a detailed description of what you'd like to research..." class="w-full px-4 py-3 text-base rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/50 focus:outline-none bg-light-input dark:bg-dark-input dark:border-gray-600 dark:text-white dark:placeholder-gray-400 transition duration-200"></textarea>
-                     </div>
-                     <div class="space-y-4">
-                         <div>
-                             <label for="researchDepth" class="block text-sm font-medium mb-2">Research Depth</label>
-                             <select id="researchDepth" class="w-full px-4 py-3 text-base rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/50 focus:outline-none bg-light-input dark:bg-dark-input dark:border-gray-600 dark:text-white transition duration-200">
-                                 <option value="quick">Quick (Surface Level)</option>
-                                 <option value="standard" selected>Standard (Balanced)</option>
-                                 <option value="comprehensive">Comprehensive (In-Depth)</option>
-                             </select>
-                         </div>
-                         <div>
-                             <label for="researchStyle" class="block text-sm font-medium mb-2">Report Style</label>
-                             <select id="researchStyle" class="w-full px-4 py-3 text-base rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/50 focus:outline-none bg-light-input dark:bg-dark-input dark:border-gray-600 dark:text-white transition duration-200">
-                                 <option value="standard" selected>Standard Report</option>
-                                 <option value="academic">Academic Paper</option>
-                                 <option value="blog_post">Blog Post</option>
-                                 <option value="bullet_points">Bullet Point Summary</option>
-                             </select>
-                         </div>
-                         <div>
-                             <label for="codMode" class="block text-sm font-medium mb-2">COD Reasoning Mode</label>
-                             <select id="codMode" class="w-full px-4 py-3 text-base rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/50 focus:outline-none bg-light-input dark:bg-dark-input dark:border-gray-600 dark:text-white transition duration-200">
-                                 <option value="default" selected>Default</option>
-                                 <option value="intensive">Intensive</option>
-                                 <option value="extensive">Extensive</option>
-                             </select>
-                         </div>
-                     </div>
-                 </div>
-                 
-                 <div class="mt-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="researchTopic" class="block text-sm font-medium mb-2">Research Topic</label>
+                        <textarea id="researchTopic" rows="4" placeholder="Enter a detailed description of what you'd like to research..." class="w-full px-4 py-3 text-base rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none bg-light-input dark:bg-dark-input dark:border-gray-700 dark:text-white"></textarea>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="researchDepth" class="block text-sm font-medium mb-2">Research Depth</label>
+                            <select id="researchDepth" class="w-full px-4 py-3 text-base rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none bg-light-input dark:bg-dark-input dark:border-gray-700 dark:text-white">
+                                <option value="quick">Quick (5-10 min)</option>
+                                <option value="standard" selected="">Standard (15-30 min)</option>
+                                <option value="comprehensive">Comprehensive (30-60 min)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="researchStyle" class="block text-sm font-medium mb-2">Research Style</label>
+                            <select id="researchStyle" class="w-full px-4 py-3 text-base rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none bg-light-input dark:bg-dark-input dark:border-gray-700 dark:text-white">
+                                <option value="standard" selected="">Standard</option>
+                                <option value="academic">Academic</option>
+                                <option value="journalistic">Journalistic</option>
+                                <option value="strategic">Strategic Analysis</option>
+                                <option value="technical">Technical</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="modelSelector" class="block text-sm font-medium mb-2">AI Model</label>
+                            <div class="relative">
+                                <input type="text" id="modelSelector" value="DeepSeek V3" class="w-full px-4 py-3 text-base rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none bg-light-input dark:bg-dark-input dark:border-gray-700 dark:text-white" readonly="">
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
                     <div class="flex items-center justify-between mb-2">
-                        <label class="block text-sm font-medium">MCP Agents</label>
-                        <button id="toggleAgentList" class="text-primary hover:text-primaryDark text-sm font-medium flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                            View All Agents
+                        <label class="block text-sm font-medium">Advanced Settings</label>
+                        <button id="advancedSettingsToggle" class="text-sm text-primary hover:text-primaryDark transition-colors duration-200">
+                            Show Advanced Settings
                         </button>
                     </div>
-                    
-                    <div id="agentSelectionGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-2">
-                        <!-- Default included agents -->
-                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer agent-selected" data-agent-id="web-search">
-                            <div class="flex items-center">
-                                <div class="rounded-full bg-blue-100 dark:bg-blue-900 p-2 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="11" cy="11" r="8"></circle>
-                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                    </svg>
+                    <div id="advancedSettings" class="hidden space-y-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg mt-2 bg-gray-50 dark:bg-gray-800/30">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="temperature" class="block text-sm font-medium mb-2">Temperature</label>
+                                <div class="flex items-center space-x-4">
+                                    <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.6" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                                    <span id="temperatureValue" class="text-sm min-w-12 text-center">0.6</span>
                                 </div>
-                                <div>
-                                    <h3 class="font-medium">Web Search</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Perplexity API</p>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Lower values for more focused research, higher for more creative exploration</p>
+                            </div>
+                            <div>
+                                <label for="maxTokens" class="block text-sm font-medium mb-2">Max Tokens</label>
+                                <div class="relative">
+                                    <select id="maxTokens" class="w-full px-4 py-3 text-base rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none bg-light-input dark:bg-dark-input dark:border-gray-700 dark:text-white">
+                                        <option value="8192">8,192 tokens</option>
+                                        <option value="12288">12,288 tokens</option>
+                                        <option value="16384">16,384 tokens</option>
+                                        <option value="20480" selected="">20,480 tokens (Recommended)</option>
+                                        <option value="24576">24,576 tokens</option>
+                                        <option value="28672">28,672 tokens</option>
+                                        <option value="32768">32,768 tokens (Maximum)</option>
+                                    </select>
                                 </div>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Maximum output length for each model call</p>
                             </div>
                         </div>
-
-                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer agent-selected" data-agent-id="data-analysis">
-                            <div class="flex items-center">
-                                <div class="rounded-full bg-green-100 dark:bg-green-900 p-2 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600 dark:text-green-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M3 3v18h18"></path>
-                                        <path d="m19 9-5 5-4-4-3 3"></path>
-                                    </svg>
+                        <div>
+                            <label for="toolsToUse" class="block text-sm font-medium mb-2">Research Tools</label>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="webSearch" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary" checked="">
+                                    <label for="webSearch" class="ml-2 text-sm">Web Search</label>
                                 </div>
-                                <div>
-                                    <h3 class="font-medium">Data Analysis</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Fireworks LLM</p>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="dataAnalysis" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary" checked="">
+                                    <label for="dataAnalysis" class="ml-2 text-sm">Data Analysis</label>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer agent-selected" data-agent-id="synthesis">
-                            <div class="flex items-center">
-                                <div class="rounded-full bg-purple-100 dark:bg-purple-900 p-2 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600 dark:text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                    </svg>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="scholarlyArticles" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary" checked="">
+                                    <label for="scholarlyArticles" class="ml-2 text-sm">Scholarly Articles</label>
                                 </div>
-                                <div>
-                                    <h3 class="font-medium">COD Synthesis</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">DeepSeek</p>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="trendAnalysis" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary" checked="">
+                                    <label for="trendAnalysis" class="ml-2 text-sm">Trend Analysis</label>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Expanded agent list (initially hidden) -->
-                    <div id="expandedAgentList" class="hidden mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="fact-checking">
-                            <div class="flex items-center">
-                                <div class="rounded-full bg-yellow-100 dark:bg-yellow-900 p-2 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600 dark:text-yellow-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"></path>
-                                        <path d="m9 12 2 2 4-4"></path>
-                                    </svg>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="factChecking" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary" checked="">
+                                    <label for="factChecking" class="ml-2 text-sm">Fact Checking</label>
                                 </div>
-                                <div>
-                                    <h3 class="font-medium">Fact Checking</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="visualization">
-                            <div class="flex items-center">
-                                <div class="rounded-full bg-pink-100 dark:bg-pink-900 p-2 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-600 dark:text-pink-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect width="16" height="18" x="4" y="3" rx="2"></rect>
-                                        <circle cx="9" cy="9" r="2"></circle>
-                                        <path d="M9 15v-2"></path>
-                                        <path d="M15 15v-6"></path>
-                                        <path d="M15 9h-3"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="font-medium">Visualization</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="academic-search">
-                            <div class="flex items-center">
-                                <div class="rounded-full bg-indigo-100 dark:bg-indigo-900 p-2 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 dark:text-indigo-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="font-medium">Academic Search</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="code-generation">
-                            <div class="flex items-center">
-                                <div class="rounded-full bg-cyan-100 dark:bg-cyan-900 p-2 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-600 dark:text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="16 18 22 12 16 6"></polyline>
-                                        <polyline points="8 6 2 12 8 18"></polyline>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="font-medium">Code Generation</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="expert-opinions">
-                            <div class="flex items-center">
-                                <div class="rounded-full bg-orange-100 dark:bg-orange-900 p-2 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-orange-600 dark:text-orange-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 6H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h.28"></path>
-                                        <path d="M7 15v2a2 2 0 0 0 2 2h1.28"></path>
-                                        <path d="M15 18h4a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3"></path>
-                                        <path d="M12 9h.01"></path>
-                                        <path d="M11 12h.01"></path>
-                                        <path d="M12 15h.01"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="font-medium">Expert Opinions</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="trend-analysis">
-                            <div class="flex items-center">
-                                <div class="rounded-full bg-red-100 dark:bg-red-900 p-2 mr-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600 dark:text-red-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="font-medium">Trend Analysis</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="vizGeneration" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary" checked="">
+                                    <label for="vizGeneration" class="ml-2 text-sm">Visualization</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="mt-6">
-                    <div class="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-800">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600 dark:text-yellow-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                                    <line x1="12" y1="9" x2="12" y2="13"></line>
-                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                </svg>
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800 dark:text-yellow-200">API Keys Detected</h3>
-                                <div class="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
-                                    <p>Vercel environment includes Perplexity API and Fireworks API keys. Additional MCP agents may require configuration.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <button id="startResearch" class="w-full mt-6 bg-primary hover:bg-primaryDark text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
-                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                         <circle cx="11" cy="11" r="8"></circle>
-                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                     </svg>
-                    Start Research with MCP Agents
+                <button id="startResearch" class="w-full mt-6 bg-primary hover:bg-primaryDark text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                    Start Comprehensive Research
                 </button>
             </section>
 
+            <!-- Research Progress Section (Initially Hidden) -->
             <section id="researchProgress" class="hidden bg-light-card dark:bg-dark-card rounded-xl p-6 mb-8 shadow-md transition-all duration-300">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-xl font-bold flex items-center">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-primary animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path>
+                            <path d="M12 8v1"></path>
+                            <path d="M12 15v1"></path>
+                            <path d="M8 12H7"></path>
+                            <path d="M17 12h-1"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                        </svg>
                         Research in Progress
                     </h2>
                     <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 animate-pulse text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
+                            <path d="M12 6v6l4 2"></path>
                         </svg>
                         <span id="elapsedTime">00:00</span>
                     </div>
                 </div>
-                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-4">
-                    <div id="progressBar" class="bg-primary h-2.5 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-primary animate-pulse mr-2"></div>
+                        <p class="text-sm font-medium" id="currentStepLabel">Initializing research...</p>
+                    </div>
+                    <div class="text-sm font-medium" id="progressPercentage">0%</div>
                 </div>
-                <div class="flex items-center justify-between mb-4 text-sm font-medium">
-                     <span id="currentStepLabel" class="text-gray-600 dark:text-gray-300">Initializing research...</span>
-                     <span id="progressPercentage" class="text-primary">0%</span>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-6">
+                    <div id="progressBar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
                 </div>
-                <div id="progressSteps" class="space-y-1 mb-6 max-h-60 overflow-y-auto pr-2">
+                <div id="progressSteps" class="space-y-1 mb-6">
                     <!-- Timeline steps will be added here dynamically -->
                 </div>
-                <h3 class="text-lg font-semibold mb-2">MCP Agent Activity:</h3>
-                 <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 mb-4 max-h-[420px] overflow-y-auto border border-gray-200 dark:border-gray-700" id="streamingOutput">
-                     <div class="text-sm font-mono text-gray-700 dark:text-gray-300 leading-relaxed typing-animation">Waiting for agent activity...</div>
-                 </div>
-                 <button id="cancelResearch" class="text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-400 text-sm font-medium mt-2 flex items-center transition-colors duration-200">
-                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                         <circle cx="12" cy="12" r="10"></circle>
-                         <line x1="15" y1="9" x2="9" y2="15"></line>
-                         <line x1="9" y1="9" x2="15" y2="15"></line>
-                     </svg>
-                     Cancel Research
-                 </button>
+                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 mb-4 max-h-[420px] overflow-y-auto" id="streamingOutput">
+                    <div class="text-sm font-sans text-gray-800 dark:text-gray-200 leading-relaxed markdown-content typing-animation">Initializing research process...</div>
+                </div>
+                <button id="cancelResearch" class="text-red-500 hover:text-red-700 text-sm font-medium mt-2 flex items-center transition-colors duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="m15 9-6 6"></path>
+                        <path d="m9 9 6 6"></path>
+                    </svg>
+                    Cancel Research
+                </button>
             </section>
 
+            <!-- Research Results Section (Initially Hidden) -->
             <section id="researchResults" class="hidden space-y-8 transition-all duration-300">
                 <div class="bg-light-card dark:bg-dark-card rounded-xl p-6 shadow-md">
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-                         <h2 class="text-2xl font-bold flex items-center text-green-600 dark:text-green-400">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                             Research Complete
-                         </h2>
-                         <div class="flex items-center space-x-2">
-                             <button id="copyResults" aria-label="Copy Results" class="inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors duration-200">
-                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                 </svg>
-                                 Copy
-                             </button>
-                             <button id="downloadResults" aria-label="Save Results as Markdown" class="inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors duration-200">
-                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line>
-                                 </svg>
-                                 Save .md
-                             </button>
-                         </div>
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                            Research Summary
+                        </h2>
+                        <div class="flex items-center space-x-2">
+                            <button id="copyResults" class="inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+                                </svg>
+                                Copy
+                            </button>
+                            <button id="downloadResults" class="inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-md bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" x2="12" y1="15" y2="3"></line>
+                                </svg>
+                                Save as Markdown
+                            </button>
+                        </div>
                     </div>
-                    <div id="researchContent" class="markdown-content pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <p>Loading final report...</p>
-                    </div>
+                    <div id="researchContent" class="markdown-content pt-2 border-t border-gray-200 dark:border-gray-700"></div>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-light-card dark:bg-dark-card rounded-xl p-6 shadow-md">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="bg-light-card dark:bg-dark-card rounded-xl p-6 shadow-md md:w-1/2">
                         <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6"></path>
+                            </svg>
                             Research Stats
                         </h3>
                         <div class="space-y-4" id="researchStats">
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Statistics will appear here.</p>
+                            <!-- Will be filled dynamically -->
                         </div>
                     </div>
-                    <div class="bg-light-card dark:bg-dark-card rounded-xl p-6 shadow-md">
+                    <div class="bg-light-card dark:bg-dark-card rounded-xl p-6 shadow-md md:w-1/2">
                         <h3 class="text-lg font-semibold mb-4 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3c-1.2 0-2.4.6-3 1.7A4 4 0 0 0 4 9c0 1 .6 2.2 1.3 3.2a18 18 0 0 0 5.2 5.2 4 4 0 0 0 6.1-6.1 18 18 0 0 0-5.2-5.2A10 10 0 0 0 12 3z"></path>
+                            </svg>
                             Key Insights
                         </h3>
                         <div class="space-y-2" id="keyInsights">
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Key insights will appear here.</p>
+                            <!-- Will be filled dynamically -->
                         </div>
                     </div>
-                 </div>
-
-                 <div class="flex justify-center">
-                     <button id="newResearch" class="mt-4 bg-primary hover:bg-primaryDark text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                             <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-                             <path d="M21 3v5h-5"></path>
-                             <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
-                             <path d="M8 16H3v5"></path>
-                         </svg>
-                         Start New Research
-                     </button>
-                 </div>
+                </div>
+                <div class="flex justify-center">
+                    <button id="newResearch" class="mt-2 bg-primary hover:bg-primaryDark text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12h18"></path>
+                            <path d="M12 3v18"></path>
+                        </svg>
+                        Start New Research
+                    </button>
+                </div>
             </section>
         </main>
 
-        <footer class="border-t border-gray-200 dark:border-gray-700 py-6 mt-8">
+        <footer class="border-t border-gray-200 dark:border-gray-800 py-6">
             <div class="container max-w-6xl mx-auto px-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                <p>DeepSeek COD Research - Powered by MCP Agents</p>
+                <p>Advanced Research Agent</p>
             </div>
         </footer>
     </div>
 
-    <div id="notificationArea" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
-
     <script>
-        // --- Theme Management ---
-        const themeToggle = document.getElementById('themeToggle');
-        const lightIcon = document.getElementById('theme-icon-light');
-        const darkIcon = document.getElementById('theme-icon-dark');
-
-        const applyTheme = (theme) => {
-            if (theme === 'dark') {
+        // Set up dark mode based on system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
                 document.documentElement.classList.add('dark');
-                lightIcon.classList.add('hidden');
-                darkIcon.classList.remove('hidden');
             } else {
                 document.documentElement.classList.remove('dark');
-                lightIcon.classList.remove('hidden');
-                darkIcon.classList.add('hidden');
             }
-            localStorage.setItem('theme', theme);
-        };
-
-        const currentTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        applyTheme(currentTheme);
-
-        themeToggle.addEventListener('click', () => {
-            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
-            applyTheme(newTheme);
         });
-
-        // --- DOM Elements ---
-        const showInputBtn = document.getElementById('showInputBtn');
-        const introCard = document.getElementById('introCard');
-        const inputSection = document.getElementById('inputSection');
+        
+        // DOM elements
+        const themeToggle = document.getElementById('themeToggle');
         const startResearchBtn = document.getElementById('startResearch');
         const newResearchBtn = document.getElementById('newResearch');
         const cancelResearchBtn = document.getElementById('cancelResearch');
@@ -552,624 +442,1196 @@
         const downloadResultsBtn = document.getElementById('downloadResults');
         const researchTopicInput = document.getElementById('researchTopic');
         const researchDepthSelect = document.getElementById('researchDepth');
-        const researchStyleSelect = document.getElementById('researchStyle');
-        const codModeSelect = document.getElementById('codMode');
-        const toggleAgentListBtn = document.getElementById('toggleAgentList');
-        const expandedAgentList = document.getElementById('expandedAgentList');
-        const agentCards = document.querySelectorAll('.agent-card');
-
-        const researchProgressSection = document.getElementById('researchProgress');
+        const researchProgress = document.getElementById('researchProgress');
         const progressSteps = document.getElementById('progressSteps');
         const streamingOutput = document.getElementById('streamingOutput');
         const progressBar = document.getElementById('progressBar');
         const progressPercentage = document.getElementById('progressPercentage');
         const currentStepLabel = document.getElementById('currentStepLabel');
         const elapsedTime = document.getElementById('elapsedTime');
-
-        const researchResultsSection = document.getElementById('researchResults');
+        const researchResults = document.getElementById('researchResults');
         const researchContent = document.getElementById('researchContent');
         const researchStats = document.getElementById('researchStats');
         const keyInsights = document.getElementById('keyInsights');
-        const notificationArea = document.getElementById('notificationArea');
-
-        // --- State Variables ---
+        const advancedSettingsToggle = document.getElementById('advancedSettingsToggle');
+        const advancedSettings = document.getElementById('advancedSettings');
+        const temperatureSlider = document.getElementById('temperature');
+        const temperatureValue = document.getElementById('temperatureValue');
+        
+        // Research state
+        let currentResearchPlan = [];
+        let currentResearchStep = 0;
+        let researchResponses = [];
         let isResearchInProgress = false;
         let startTime = null;
         let elapsedTimeInterval = null;
+        let streamingInterval = null;
         let abortController = null;
-        let currentResearchData = null; // To store final results for copy/download
-        let selectedAgents = ['web-search', 'data-analysis', 'synthesis']; // Default selected agents
-
-        // --- Event Listeners ---
-        showInputBtn.addEventListener('click', () => {
-            introCard.classList.add('hidden');
-            inputSection.classList.remove('hidden');
-            inputSection.classList.add('animate-fade-in');
+        
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
         });
-
-        startResearchBtn.addEventListener('click', startResearch);
-        cancelResearchBtn.addEventListener('click', cancelResearch);
-        newResearchBtn.addEventListener('click', resetUI);
-        copyResultsBtn.addEventListener('click', copyResults);
-        downloadResultsBtn.addEventListener('click', downloadResults);
-
-        // Toggle expanded agent list
-        toggleAgentListBtn.addEventListener('click', () => {
-            const isHidden = expandedAgentList.classList.contains('hidden');
-            expandedAgentList.classList.toggle('hidden');
-            toggleAgentListBtn.innerHTML = isHidden ? 
-                `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="18 15 12 9 6 15"></polyline>
-                </svg> Hide Additional Agents` : 
-                `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg> View All Agents`;
+        
+        // Toggle advanced settings
+        advancedSettingsToggle.addEventListener('click', () => {
+            advancedSettings.classList.toggle('hidden');
+            advancedSettingsToggle.textContent = advancedSettings.classList.contains('hidden') 
+                ? 'Show Advanced Settings' 
+                : 'Hide Advanced Settings';
         });
-
-        // Agent selection functionality
-        agentCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const agentId = card.getAttribute('data-agent-id');
-                
-                if (card.classList.contains('agent-selected')) {
-                    // Don't allow deselecting the synthesis agent
-                    if (agentId === 'synthesis') {
-                        showNotification('The COD Synthesis agent is required and cannot be deselected', 'info');
-                        return;
-                    }
-                    
-                    card.classList.remove('agent-selected');
-                    selectedAgents = selectedAgents.filter(id => id !== agentId);
-                } else {
-                    card.classList.add('agent-selected');
-                    if (!selectedAgents.includes(agentId)) {
-                        selectedAgents.push(agentId);
-                    }
-                }
-            });
+        
+        // Update temperature value display
+        temperatureSlider.addEventListener('input', () => {
+            temperatureValue.textContent = temperatureSlider.value;
         });
-
-        // --- Core Functions ---
-
-        async function startResearch() {
+        
+        // Start research button click handler
+        startResearchBtn.addEventListener('click', async () => {
             const researchTopic = researchTopicInput.value.trim();
+            
             if (!researchTopic) {
-                showNotification('Please enter a research topic.', 'error');
+                showError('Please enter a research topic');
                 return;
             }
-            if (isResearchInProgress) return;
-
+            
+            if (isResearchInProgress) {
+                return;
+            }
+            
+            // Reset previous research
+            currentResearchPlan = [];
+            currentResearchStep = 0;
+            researchResponses = [];
+            progressSteps.innerHTML = '';
+            streamingOutput.innerHTML = '<p class="text-sm font-mono typing-animation">Initializing research process...</p>';
             isResearchInProgress = true;
             abortController = new AbortController();
-            currentResearchData = null; // Reset previous data
-
-            // Reset UI for progress
-            progressSteps.innerHTML = '';
-            streamingOutput.innerHTML = '<div class="text-sm font-mono text-gray-700 dark:text-gray-300 leading-relaxed typing-animation">Initializing MCP agent network...</div>';
-            researchProgressSection.classList.remove('hidden');
-            researchProgressSection.classList.add('animate-fade-in');
-            researchResultsSection.classList.add('hidden');
-            inputSection.classList.add('hidden'); // Hide input section during research
-            introCard.classList.add('hidden');
-
-            // Disable start button, show loading state
+            
+            // Reset and start timer
+            startTime = Date.now();
+            if (elapsedTimeInterval) clearInterval(elapsedTimeInterval);
+            elapsedTimeInterval = setInterval(updateElapsedTime, 1000);
+            
+            // Show progress section, hide results
+            researchProgress.classList.remove('hidden');
+            researchResults.classList.add('hidden');
+            
+            // Disable start button
             startResearchBtn.disabled = true;
             startResearchBtn.innerHTML = `
                 <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Researching...`;
-
-            // Reset and start timer
-            startTime = Date.now();
-            updateElapsedTime(); // Initial display
-            if (elapsedTimeInterval) clearInterval(elapsedTimeInterval);
-            elapsedTimeInterval = setInterval(updateElapsedTime, 1000);
-
-            updateProgress(0, 'Initializing...');
-            addTimelineStep('MCP Initialization', 'Connecting to agent network...', 'in-progress');
-
-            // --- Call Backend API ---
+                Creating Research Plan...
+            `;
+            
+            // Update progress
+            updateProgress(0, 'Planning Research');
+            
+            // Generate research plan
             try {
-                const response = await fetch('/api/research', {
+                // Add initial step in timeline
+                addTimelineStep('Planning Research', 'Creating a detailed research plan...', 'in-progress');
+                
+                const planPrompt = createPlanningPrompt(researchTopic, researchDepthSelect.value);
+                const planResponse = await fetchWithStreaming('/api/research/plan', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         topic: researchTopic,
                         depth: researchDepthSelect.value,
-                        style: researchStyleSelect.value,
-                        cod_mode: codModeSelect.value,
-                        capabilities: selectedAgents
+                        style: document.getElementById('researchStyle').value,
+                        model: document.getElementById('modelSelector').value,
+                        temperature: parseFloat(temperatureSlider.value),
+                        maxTokens: parseInt(document.getElementById('maxTokens').value)
                     }),
-                    signal: abortController.signal,
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ detail: 'Unknown server error' }));
-                    throw new Error(`Server error: ${response.status} ${response.statusText}. ${errorData.detail || ''}`);
+                    signal: abortController.signal
+                }, handleStreamingPlanUpdate);
+                
+                if (!planResponse || planResponse.error) {
+                    throw new Error(planResponse?.error || 'Failed to create research plan');
                 }
-
-                if (!response.body) {
-                     throw new Error("ReadableStream not yet supported in this browser.");
+                
+                await handlePlanningResponse(planResponse);
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('Research planning aborted');
+                } else {
+                    handleError('Error starting research', error);
                 }
-
-                // Process stream
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-                let buffer = '';
-                let fullLog = ''; // Accumulate logs for the streaming output
-                streamingOutput.innerHTML = ''; // Clear initial message
-
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
-
-                    buffer += decoder.decode(value, { stream: true });
-
-                    // Process buffer line by line (assuming newline-delimited JSON chunks)
-                    let boundary = buffer.indexOf('\n');
-                    while (boundary !== -1) {
-                        const chunkString = buffer.substring(0, boundary).trim();
-                        buffer = buffer.substring(boundary + 1);
-
-                        if (chunkString) {
-                            try {
-                                const chunk = JSON.parse(chunkString);
-                                processStreamChunk(chunk);
-
-                                // Append log chunk to the streaming output display
-                                if (chunk.type === 'log' || chunk.type === 'step_update' || chunk.type === 'progress') {
-                                     const logEntry = document.createElement('div');
-                                     logEntry.className = 'text-sm font-mono text-gray-700 dark:text-gray-300 leading-relaxed mb-1';
-                                     
-                                     // Add agent icon if this is from an MCP agent
-                                     if (chunk.data.agent) {
-                                        logEntry.innerHTML = `
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary mr-1">
-                                                ${chunk.data.agent}
-                                            </span>
-                                            <span>[${new Date().toLocaleTimeString()}]</span> ${chunk.data.message || chunk.data.status || `${chunk.data.percent}%`}
-                                        `;
-                                     } else {
-                                        logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${chunk.data.message || chunk.data.status || `${chunk.data.percent}%`}`;
-                                     }
-                                     
-                                     streamingOutput.appendChild(logEntry);
-                                     streamingOutput.scrollTop = streamingOutput.scrollHeight; // Auto-scroll
-                                } else if (chunk.type === 'final_report') {
-                                    // Handle final report separately after loop
-                                } else if (chunk.type === 'error') {
-                                     const errorEntry = document.createElement('div');
-                                     errorEntry.className = 'text-sm font-mono text-red-600 dark:text-red-400 leading-relaxed mb-1';
-                                     errorEntry.textContent = `[${new Date().toLocaleTimeString()}] ERROR: ${chunk.data.message}`;
-                                     streamingOutput.appendChild(errorEntry);
-                                     streamingOutput.scrollTop = streamingOutput.scrollHeight; // Auto-scroll
-                                     throw new Error(chunk.data.message); // Stop processing on server error
-                                }
-
-                            } catch (e) {
-                                console.error("Error parsing stream chunk:", chunkString, e);
-                                // Optionally display parsing error in UI
-                            }
+            }
+        });
+        
+        // Cancel research button click handler
+        cancelResearchBtn.addEventListener('click', () => {
+            if (abortController) {
+                abortController.abort();
+                abortController = null;
+            }
+            
+            // Clear intervals
+            if (elapsedTimeInterval) {
+                clearInterval(elapsedTimeInterval);
+                elapsedTimeInterval = null;
+            }
+            
+            if (streamingInterval) {
+                clearInterval(streamingInterval);
+                streamingInterval = null;
+            }
+            
+            // Update UI
+            isResearchInProgress = false;
+            researchProgress.classList.add('hidden');
+            
+            // Reset buttons
+            startResearchBtn.disabled = false;
+            startResearchBtn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </svg>
+                Start Comprehensive Research
+            `;
+            
+            showNotification('Research canceled', 'info');
+        });
+        
+        // New research button click handler
+        newResearchBtn.addEventListener('click', () => {
+            researchResults.classList.add('hidden');
+            researchProgress.classList.add('hidden');
+            startResearchBtn.disabled = false;
+            startResearchBtn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </svg>
+                Start Comprehensive Research
+            `;
+            
+            // Don't clear the input so users can refine their prompt
+            // researchTopicInput.value = '';
+            isResearchInProgress = false;
+        });
+        
+        // Copy results button click handler
+        copyResultsBtn.addEventListener('click', () => {
+            const content = researchContent.textContent;
+            navigator.clipboard.writeText(content)
+                .then(() => showNotification('Research results copied to clipboard', 'success'))
+                .catch(err => showError('Failed to copy: ' + err));
+        });
+        
+        // Download results button click handler
+        downloadResultsBtn.addEventListener('click', () => {
+            // This doesn't actually download a file since file downloads aren't supported.
+            // Instead, we'll show the markdown source so users can manually copy it
+            
+            const content = researchContent.getAttribute('data-markdown') || researchContent.textContent;
+            
+            // Create a modal with the markdown content
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-dark-card rounded-lg shadow-xl max-w-4xl w-full max-h-[80vh] flex flex-col">
+                    <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                        <h3 class="text-lg font-semibold">Markdown Source</h3>
+                        <button class="close-modal text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="p-4 flex-1 overflow-auto">
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Copy this markdown and save to a .md file:</p>
+                        <pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-sm font-mono overflow-auto whitespace-pre-wrap max-h-[calc(80vh-180px)]">${content}</pre>
+                    </div>
+                    <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+                        <button class="copy-markdown bg-primary hover:bg-primaryDark text-white px-4 py-2 rounded-md">
+                            Copy Markdown
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Handle close modal
+            modal.querySelector('.close-modal').addEventListener('click', () => {
+                document.body.removeChild(modal);
+            });
+            
+            // Handle copy button
+            modal.querySelector('.copy-markdown').addEventListener('click', () => {
+                navigator.clipboard.writeText(content)
+                    .then(() => {
+                        showNotification('Markdown copied to clipboard', 'success');
+                        document.body.removeChild(modal);
+                    })
+                    .catch(err => showError('Failed to copy: ' + err));
+            });
+            
+            // Close when clicking outside
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            });
+        });
+        
+        // Fetch with streaming support
+        async function fetchWithStreaming(url, options, onStreamUpdate) {
+            try {
+                // In the real app this would make an actual fetch request
+                // Here we'll simulate the API for the example
+                
+                // Start streaming simulation
+                let streamContent = '';
+                
+                if (streamingInterval) {
+                    clearInterval(streamingInterval);
+                }
+                
+                // This simulates streaming updates from the server
+                return new Promise((resolve, reject) => {
+                    try {
+                        const { topic, depth } = JSON.parse(options.body);
+                        
+                        // Simulate different endpoints
+                        if (url.includes('/plan')) {
+                            simulateResearchPlan(topic, depth, onStreamUpdate, resolve, options.signal);
+                        } else if (url.includes('/research')) {
+                            const { step } = JSON.parse(options.body);
+                            simulateResearchStep(topic, step, onStreamUpdate, resolve, options.signal);
+                        } else if (url.includes('/synthesize')) {
+                            simulateSynthesis(topic, currentResearchPlan, researchResponses, onStreamUpdate, resolve, options.signal);
                         }
-                        boundary = buffer.indexOf('\n');
+                        
+                        // Listen for abort signal
+                        options.signal?.addEventListener('abort', () => {
+                            if (streamingInterval) {
+                                clearInterval(streamingInterval);
+                                streamingInterval = null;
+                            }
+                            reject(new DOMException('Aborted', 'AbortError'));
+                        });
+                    } catch (error) {
+                        if (streamingInterval) {
+                            clearInterval(streamingInterval);
+                            streamingInterval = null;
+                        }
+                        reject(error);
+                    }
+                });
+            } catch (error) {
+                throw error;
+            }
+        }
+        
+        // Simulated API responses
+        function simulateResearchPlan(topic, depth, onStreamUpdate, resolve, signal) {
+            let streamContent = '';
+            const chunks = [
+                '{"title": "',
+                `Comprehensive Analysis of ${topic}`,
+                '", "steps": [',
+                '{"id": 1, "title": "Historical Context and Background", "description": "Research the historical development and background of the topic", "key_questions": ["What are the origins?", "How has it evolved over time?", "What were significant milestones?"]},',
+                '{"id": 2, "title": "Current State Analysis", "description": "Assess the present situation and recent developments", "key_questions": ["What is the current landscape?", "What are the latest developments?", "Who are the key players?"]},',
+                '{"id": 3, "title": "Key Challenges and Issues", "description": "Identify critical problems and obstacles", "key_questions": ["What major challenges exist?", "What controversies are associated?", "What are potential roadblocks?"]},',
+                '{"id": 4, "title": "Technological and Scientific Aspects", "description": "Analyze scientific foundations and technological implementations", "key_questions": ["What technologies are involved?", "What scientific principles underpin this topic?", "What innovations are emerging?"]},',
+                '{"id": 5, "title": "Economic and Market Implications", "description": "Evaluate economic impacts and market dynamics", "key_questions": ["What is the economic significance?", "How does it affect markets?", "What are the business opportunities?"]},',
+                '{"id": 6, "title": "Social and Cultural Impact", "description": "Assess effects on society and culture", "key_questions": ["How does it affect different communities?", "What cultural shifts has it caused?", "How has public perception evolved?"]},',
+                '{"id": 7, "title": "Future Trends and Predictions", "description": "Forecast upcoming developments and future directions", "key_questions": ["What are expected future trends?", "How might it evolve in coming years?", "What potential disruptions could occur?"]}'
+            ];
+            
+            if (depth === 'quick') {
+                chunks.splice(5, 2); // Remove 2 steps for quick research
+            } else if (depth === 'comprehensive') {
+                chunks.push(',');
+                chunks.push('{"id": 8, "title": "Case Studies and Examples", "description": "Examine specific implementations and real-world examples", "key_questions": ["What successful implementations exist?", "What failures or cautionary tales are documented?", "What lessons can be learned from these cases?"]},');
+                chunks.push('{"id": 9, "title": "Regulatory and Policy Framework", "description": "Analyze legal, regulatory, and policy aspects", "key_questions": ["What regulations govern this area?", "How do policies vary across regions?", "What regulatory changes are anticipated?"]}');
+            }
+            
+            chunks.push(']}');
+            
+            let chunkIndex = 0;
+            
+            streamingInterval = setInterval(() => {
+                if (signal?.aborted) {
+                    clearInterval(streamingInterval);
+                    return;
+                }
+                
+                if (chunkIndex < chunks.length) {
+                    streamContent += chunks[chunkIndex];
+                    onStreamUpdate(streamContent);
+                    chunkIndex++;
+                } else {
+                    clearInterval(streamingInterval);
+                    
+                    try {
+                        // Finalize with the complete response
+                        const jsonResponse = JSON.parse(streamContent);
+                        resolve(jsonResponse);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        resolve({ error: "Failed to parse research plan" });
                     }
                 }
-                 // Process any remaining buffer content if necessary (e.g., final chunk without newline)
-                 if (buffer.trim()) {
-                     try {
-                         const chunk = JSON.parse(buffer.trim());
-                         processStreamChunk(chunk);
-                         // Handle log display as above
-                     } catch (e) {
-                         console.error("Error parsing final stream chunk:", buffer.trim(), e);
-                     }
-                 }
-
-                 // Research considered complete once stream ends, assuming final chunk contains results
-                if (currentResearchData) { // Ensure final data was received
-                    completeResearch(currentResearchData);
-                } else {
-                     throw new Error("Research finished, but no final report data was received from the server.");
+            }, 300);
+        }
+        
+        function simulateResearchStep(topic, step, onStreamUpdate, resolve, signal) {
+            // Create simulated research content based on the step
+            const researchContent = [];
+            
+            switch (step.title.toLowerCase().split(' ')[0]) {
+                case 'historical':
+                    researchContent.push(`# Historical Context and Background of ${topic}\n\n`);
+                    researchContent.push(`The concept of ${topic} has evolved significantly over time. `);
+                    researchContent.push(`Initially emerging in the early stages as a theoretical framework, `);
+                    researchContent.push(`it has transformed through several distinct phases of development.\n\n`);
+                    researchContent.push(`## Origins\n\n`);
+                    researchContent.push(`The origins can be traced back to pioneering work in the field, `);
+                    researchContent.push(`with early contributors establishing fundamental principles that `);
+                    researchContent.push(`would later become central to understanding the topic. `);
+                    researchContent.push(`These foundational elements include:\n\n`);
+                    researchContent.push(`- Theoretical frameworks developed in academic settings\n`);
+                    researchContent.push(`- Early practical applications that demonstrated potential\n`);
+                    researchContent.push(`- Interdisciplinary approaches that enriched the concept\n\n`);
+                    researchContent.push(`## Evolution Timeline\n\n`);
+                    researchContent.push(`- **Early Phase (1970s-1980s)**: Conceptual development and theoretical groundwork\n`);
+                    researchContent.push(`- **Growth Phase (1990s-2000s)**: Expanded applications and methodological refinement\n`);
+                    researchContent.push(`- **Maturation Phase (2010s)**: Integration with other domains and practical standardization\n`);
+                    researchContent.push(`- **Current Phase (2020s)**: Advanced implementations and specialized applications\n\n`);
+                    researchContent.push(`## Key Milestones\n\n`);
+                    researchContent.push(`Several breakthrough moments have defined the trajectory of ${topic}:\n\n`);
+                    researchContent.push(`1. The publication of seminal research papers establishing core principles\n`);
+                    researchContent.push(`2. Development of standardized methodologies enabling consistent application\n`);
+                    researchContent.push(`3. Technological advances that expanded practical capabilities\n`);
+                    researchContent.push(`4. Formation of dedicated professional organizations and research communities\n`);
+                    break;
+                    
+                case 'current':
+                    researchContent.push(`# Current State Analysis of ${topic}\n\n`);
+                    researchContent.push(`The present landscape of ${topic} is characterized by rapid evolution `);
+                    researchContent.push(`and increasing integration across various sectors. Recent developments `);
+                    researchContent.push(`have significantly expanded both theoretical understanding and practical applications.\n\n`);
+                    researchContent.push(`## Latest Developments\n\n`);
+                    researchContent.push(`Recent advancements in ${topic} include:\n\n`);
+                    researchContent.push(`- Introduction of improved methodologies that enhance effectiveness\n`);
+                    researchContent.push(`- Integration with complementary technologies creating synergistic effects\n`);
+                    researchContent.push(`- Expansion into previously unexplored domains and use cases\n`);
+                    researchContent.push(`- Refinement of best practices based on accumulated experience\n\n`);
+                    researchContent.push(`## Key Players\n\n`);
+                    researchContent.push(`The field is shaped by contributions from several types of entities:\n\n`);
+                    researchContent.push(`### Academic Institutions\n`);
+                    researchContent.push(`Universities and research centers continue to drive theoretical innovation through dedicated research programs.\n\n`);
+                    researchContent.push(`### Industry Leaders\n`);
+                    researchContent.push(`Major companies have established specialized divisions focused on developing and implementing advanced solutions.\n\n`);
+                    researchContent.push(`### Specialized Organizations\n`);
+                    researchContent.push(`Dedicated entities have emerged that focus exclusively on specific aspects or applications.\n\n`);
+                    researchContent.push(`### Government Agencies\n`);
+                    researchContent.push(`Public sector involvement has increased, particularly in areas related to standardization and public applications.\n\n`);
+                    break;
+                    
+                case 'key':
+                    researchContent.push(`# Key Challenges and Issues in ${topic}\n\n`);
+                    researchContent.push(`Despite significant progress, ${topic} faces several critical challenges `);
+                    researchContent.push(`that impede further development and widespread adoption. These issues `);
+                    researchContent.push(`range from technical limitations to broader societal concerns.\n\n`);
+                    researchContent.push(`## Major Technical Challenges\n\n`);
+                    researchContent.push(`1. **Scalability Constraints**: Difficulties in scaling solutions to handle larger volumes or more complex scenarios\n`);
+                    researchContent.push(`2. **Integration Complexity**: Challenges in seamlessly integrating with existing systems and workflows\n`);
+                    researchContent.push(`3. **Technical Limitations**: Fundamental constraints that currently restrict certain capabilities\n`);
+                    researchContent.push(`4. **Performance Optimization**: Balancing effectiveness with efficiency in resource utilization\n\n`);
+                    researchContent.push(`## Controversies and Ethical Concerns\n\n`);
+                    researchContent.push(`Several contentious issues have emerged around ${topic}:\n\n`);
+                    researchContent.push(`- Questions about appropriate use and potential misapplication\n`);
+                    researchContent.push(`- Debates regarding ownership, control, and access rights\n`);
+                    researchContent.push(`- Concerns about unintended consequences and secondary effects\n`);
+                    researchContent.push(`- Disagreements about governance and oversight mechanisms\n\n`);
+                    researchContent.push(`## Implementation Roadblocks\n\n`);
+                    researchContent.push(`Organizations attempting to implement ${topic} frequently encounter:\n\n`);
+                    researchContent.push(`- **Resource Constraints**: Limited availability of necessary expertise and infrastructure\n`);
+                    researchContent.push(`- **Resistance to Change**: Organizational inertia and reluctance to adopt new approaches\n`);
+                    researchContent.push(`- **Knowledge Gaps**: Insufficient understanding of requirements and implications\n`);
+                    researchContent.push(`- **Regulatory Uncertainty**: Unclear or evolving regulatory frameworks\n\n`);
+                    break;
+                    
+                // Add more cases for other research steps
+                
+                default:
+                    // Generic research content for other steps
+                    researchContent.push(`# ${step.title} for ${topic}\n\n`);
+                    researchContent.push(`This section explores ${step.description.toLowerCase()}.\n\n`);
+                    researchContent.push(`## Key Findings\n\n`);
+                    researchContent.push(`Based on comprehensive analysis, several important aspects have been identified:\n\n`);
+                    researchContent.push(`1. The ${topic} demonstrates significant relationships with related concepts\n`);
+                    researchContent.push(`2. Multiple factors influence development and implementation in this area\n`);
+                    researchContent.push(`3. Emerging patterns suggest important future directions\n`);
+                    researchContent.push(`4. Both opportunities and challenges characterize the current landscape\n\n`);
+                    researchContent.push(`## Detailed Analysis\n\n`);
+                    researchContent.push(`When examining this aspect in detail, several components merit special attention:\n\n`);
+                    researchContent.push(`### Component One\n`);
+                    researchContent.push(`This element represents a fundamental aspect that influences overall functioning and effectiveness.\n\n`);
+                    researchContent.push(`### Component Two\n`);
+                    researchContent.push(`Secondary factors interact with primary elements to create complex relationships and dependencies.\n\n`);
+                    researchContent.push(`### Component Three\n`);
+                    researchContent.push(`Peripheral considerations nonetheless have significant implications for comprehensive understanding.\n\n`);
+                    break;
+            }
+            
+            let chunkIndex = 0;
+            
+            streamingInterval = setInterval(() => {
+                if (signal?.aborted) {
+                    clearInterval(streamingInterval);
+                    return;
                 }
+                
+                if (chunkIndex < researchContent.length) {
+                    onStreamUpdate(researchContent.slice(0, chunkIndex + 1).join(''));
+                    chunkIndex++;
+                } else {
+                    clearInterval(streamingInterval);
+                    resolve(researchContent.join(''));
+                }
+            }, 200);
+        }
+        
+        function simulateSynthesis(topic, plan, responses, onStreamUpdate, resolve, signal) {
+            const synthesisContent = [];
+            
+            // Add detailed error logging
+            console.log("Starting synthesis with plan:", plan ? 
+                `Valid object with ${plan.steps ? plan.steps.length : 0} steps` : 
+                "Invalid plan (null/undefined)");
+            console.log("Current research plan:", currentResearchPlan ? 
+                `Valid object with ${currentResearchPlan.steps ? currentResearchPlan.steps.length : 0} steps` : 
+                "Invalid plan (null/undefined)");
+            
+            // Check if plan is valid and has steps
+            if (!plan || !plan.steps || !Array.isArray(plan.steps) || plan.steps.length === 0) {
+                console.error("Invalid research plan for synthesis, attempting to fallback");
+                
+                // Try using currentResearchPlan as fallback
+                if (currentResearchPlan && currentResearchPlan.steps && 
+                    Array.isArray(currentResearchPlan.steps) && currentResearchPlan.steps.length > 0) {
+                    console.log("Using currentResearchPlan as fallback");
+                    plan = {...currentResearchPlan}; // Clone to avoid reference issues
+                } else {
+                    // Create a default plan if neither is valid
+                    console.log("Creating default research plan structure");
+                    plan = {
+                        steps: [
+                            {id: 1, title: "Historical Context and Background"},
+                            {id: 2, title: "Current State Analysis"},
+                            {id: 3, title: "Key Challenges and Issues"},
+                            {id: 4, title: "Future Trends and Predictions"}
+                        ]
+                    };
+                }
+            }
+            
+            synthesisContent.push(`# Comprehensive Analysis: ${topic}\n\n`);
+            synthesisContent.push(`## Executive Summary\n\n`);
+            synthesisContent.push(`This report presents a comprehensive analysis of ${topic}, examining its historical context, current state, challenges, technological aspects, economic implications, social impact, and future trends. The research reveals that ${topic} is a multifaceted subject with significant implications across various domains. Key findings indicate both substantial opportunities and notable challenges that require careful consideration.\n\n`);
+            synthesisContent.push(`## 1. Introduction\n\n`);
+            synthesisContent.push(`${topic} represents an area of growing importance in contemporary contexts. This research was conducted to provide a comprehensive understanding of its various dimensions, current status, and potential future developments. The following sections present the findings organized by thematic areas.\n\n`);
+            
+            // Add sections based on research steps
+            for (let i = 0; i < plan.steps.length; i++) {
+                const step = plan.steps[i];
+                // Ensure step has a title
+                const stepTitle = step.title || `Research Area ${i + 1}`;
+                const sectionNumber = i + 2; // Section numbering starts from 2 since we have Intro as section 1
+                synthesisContent.push(`## ${sectionNumber}. ${stepTitle}\n\n`);
+                
+                // Add synthesized content from responses
+                if (responses && responses[i]) {
+                    // Extract key points from the research response
+                    const lines = responses[i].split('\n');
+                    let extractedSubsections = [];
+                    let currentSubsection = '';
+                    let currentSubsectionContent = [];
+                    let pointsAdded = 0;
+                    
+                    // First pass: extract subsections with their content
+                    for (let j = 0; j < lines.length; j++) {
+                        const line = lines[j];
+                        
+                        // Check if this is a subsection header (###)
+                        if (line.startsWith('### ')) {
+                            // If we were already collecting a subsection, save it
+                            if (currentSubsection) {
+                                extractedSubsections.push({
+                                    title: currentSubsection,
+                                    content: currentSubsectionContent
+                                });
+                            }
+                            
+                            // Start a new subsection
+                            currentSubsection = line.replace(/^### /, '').trim();
+                            currentSubsectionContent = [];
+                        } 
+                        // Don't include ## headers as they might conflict with main section headers
+                        else if (!line.startsWith('## ') && currentSubsection) {
+                            currentSubsectionContent.push(line);
+                        }
+                    }
+                    
+                    // Save the last subsection if there is one
+                    if (currentSubsection) {
+                        extractedSubsections.push({
+                            title: currentSubsection,
+                            content: currentSubsectionContent
+                        });
+                    }
+                    
+                    // If we found subsections, use them
+                    if (extractedSubsections.length > 0) {
+                        // Add up to 3 subsections to keep the report concise
+                        const subsectionsToAdd = extractedSubsections.slice(0, 3);
+                        
+                        for (const subsection of subsectionsToAdd) {
+                            synthesisContent.push(`### ${subsection.title}\n\n`);
+                            
+                            // Filter for bullet points and numbered items
+                            const bulletPoints = subsection.content.filter(line => 
+                                line.trim().startsWith('- ') || 
+                                line.trim().startsWith('* ') || 
+                                line.trim().match(/^\d+\.\s/) !== null
+                            );
+                            
+                            // Add up to 3 bullet points
+                            if (bulletPoints.length > 0) {
+                                const pointsToAdd = bulletPoints.slice(0, 3);
+                                for (const point of pointsToAdd) {
+                                    synthesisContent.push(`${point}\n\n`);
+                                }
+                            } else {
+                                // If no bullet points, add a generic paragraph
+                                synthesisContent.push(`This area examines important aspects of ${topic} related to ${subsection.title.toLowerCase()}. The analysis reveals noteworthy patterns and relationships that contribute to the overall understanding of the topic.\n\n`);
+                            }
+                        }
+                    } else {
+                        // If no subsections were found, add generic content
+                        synthesisContent.push(`Analysis of this aspect reveals important insights into how ${topic} relates to ${stepTitle.toLowerCase()}. Multiple factors influence developments in this area, with significant implications for overall understanding and practical applications.\n\n`);
+                    }
+                } else {
+                    synthesisContent.push(`This aspect of ${topic} requires further investigation to develop a comprehensive understanding. Initial analysis suggests important relationships with other dimensions examined in this research.\n\n`);
+                }
+            }
+            
+            // Calculate the correct section numbers for the final sections
+            const insightsSecNum = plan.steps.length + 2;
+            const conclusionSecNum = plan.steps.length + 3;
+            
+            synthesisContent.push(`## ${insightsSecNum}. Key Insights and Recommendations\n\n`);
+            synthesisContent.push(`Based on the comprehensive analysis conducted, several key insights and recommendations can be identified:\n\n`);
+            synthesisContent.push(`### Key Insights\n\n`);
+            synthesisContent.push(`1. ${topic} demonstrates complex interconnections across multiple domains, necessitating interdisciplinary approaches\n`);
+            synthesisContent.push(`2. Historical development reveals patterns that continue to influence current applications and understanding\n`);
+            synthesisContent.push(`3. Technical and scientific foundations are evolving rapidly, creating both opportunities and implementation challenges\n`);
+            synthesisContent.push(`4. Economic and social dimensions are increasingly recognized as critical to successful outcomes\n\n`);
+            synthesisContent.push(`### Recommendations\n\n`);
+            synthesisContent.push(`1. **Integrated Approach**: Develop strategies that address multiple dimensions simultaneously\n`);
+            synthesisContent.push(`2. **Knowledge Development**: Invest in closing identified knowledge gaps through targeted research\n`);
+            synthesisContent.push(`3. **Collaborative Frameworks**: Establish mechanisms for cross-sector collaboration\n`);
+            synthesisContent.push(`4. **Adaptive Planning**: Implement flexible approaches that can accommodate emerging developments\n\n`);
+            synthesisContent.push(`## ${conclusionSecNum}. Conclusion\n\n`);
+            synthesisContent.push(`This research has provided a comprehensive examination of ${topic}, revealing its multifaceted nature and significant implications. While substantial progress has been made in understanding and implementing related concepts, important challenges remain. Future developments will likely be shaped by continuing technological innovation, evolving regulatory frameworks, and shifting societal needs and expectations. Continued monitoring and analysis of these factors will be essential for effective engagement with ${topic} moving forward.\n\n`);
+            
+            let chunkIndex = 0;
+            
+            streamingInterval = setInterval(() => {
+                if (signal?.aborted) {
+                    clearInterval(streamingInterval);
+                    return;
+                }
+                
+                if (chunkIndex < synthesisContent.length) {
+                    onStreamUpdate(synthesisContent.slice(0, chunkIndex + 1).join(''));
+                    chunkIndex++;
+                } else {
+                    clearInterval(streamingInterval);
+                    resolve(synthesisContent.join(''));
+                }
+            }, 150);
+        }
+        
+        // Planning prompt creator
+        function createPlanningPrompt(topic, depth) {
+            const depthDetails = {
+                'quick': '3-5 specific research subtasks',
+                'standard': '5-7 specific research subtasks',
+                'comprehensive': '7-10 specific research subtasks'
+            };
+            
+            const selectedStyle = document.getElementById('researchStyle').value;
+            let stylePrefix = '';
+            
+            if (selectedStyle === 'academic') {
+                stylePrefix = `As an academic researcher, `;
+            } else if (selectedStyle === 'journalistic') {
+                stylePrefix = `As an investigative journalist, `;
+            } else if (selectedStyle === 'strategic') {
+                stylePrefix = `As a strategic analyst, `;
+            } else if (selectedStyle === 'technical') {
+                stylePrefix = `As a technical specialist, `;
+            }
+            
+            return `${stylePrefix}You are a research planning agent. I need you to create a research plan for the topic: "${topic}".
 
+Based on ${depthDetails[depth]}, break down this topic into a focused research plan.
+
+Your response must strictly follow this format as valid JSON without any explanation or additional text:
+{
+  "title": "Research title",
+  "steps": [
+    {
+      "id": 1,
+      "title": "Step 1 title",
+      "description": "What needs to be researched in this step",
+      "key_questions": ["Question 1", "Question 2"]
+    },
+    {
+      "id": 2,
+      "title": "Step 2 title",
+      "description": "What needs to be researched in this step",
+      "key_questions": ["Question 1", "Question 2"]
+    }
+  ]
+}
+
+Provide ONLY raw JSON in your response with no explanations, additional text, or code block formatting (no \`\`\`).`;
+        }
+        
+        // Streaming update handlers
+        function handleStreamingPlanUpdate(content) {
+            streamingOutput.innerHTML = `<div class="text-sm font-sans text-gray-800 dark:text-gray-200 leading-relaxed"><pre class="bg-gray-200 dark:bg-gray-700 p-3 rounded overflow-auto">${content}</pre></div>`;
+            streamingOutput.scrollTop = streamingOutput.scrollHeight;
+        }
+        
+        function handleStreamingResearchUpdate(content) {
+            streamingOutput.innerHTML = `<div class="text-sm font-sans text-gray-800 dark:text-gray-200 leading-relaxed markdown-content">${marked.parse(content)}</div>`;
+            streamingOutput.scrollTop = streamingOutput.scrollHeight;
+        }
+        
+        // Handlers for API responses
+        async function handlePlanningResponse(planData) {
+            // Update progress UI based on response status
+            if (!planData || planData.error) {
+                updateTimelineStep(0, 'Planning Research', `Error: ${planData?.error || 'Unknown error'}`, 'error');
+                startResearchBtn.disabled = false;
+                startResearchBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                    Start Comprehensive Research
+                `;
+                isResearchInProgress = false;
+                return;
+            } 
+            
+            try {
+                // Set research plan
+                currentResearchPlan = planData;
+                updateTimelineStep(0, 'Planning Research', 'Research plan created successfully', 'complete');
+                
+                // Update progress percentage
+                updateProgress(5, 'Research Plan Created');
+                
+                // Add steps to timeline UI
+                currentResearchPlan.steps.forEach((step, index) => {
+                    addTimelineStep(`Step ${step.id}: ${step.title}`, 'Waiting to start...', 'waiting');
+                });
+                
+                // Add final synthesis step
+                addTimelineStep('Synthesizing Research', 'Waiting to collect all research data...', 'waiting');
+                
+                // Start first research step
+                await startNextResearchStep();
             } catch (error) {
-                 if (error.name === 'AbortError') {
-                     console.log('Research fetch aborted.');
-                     showNotification('Research cancelled.', 'info');
-                     handleResearchEnd(); // Clean up UI state
-                 } else {
-                     console.error('Research error:', error);
-                     showNotification(`Research failed: ${error.message}`, 'error');
-                     handleResearchEnd(true); // Clean up UI state, indicate error
-                 }
+                updateTimelineStep(0, 'Planning Research', 'Error parsing research plan', 'error');
+                console.error("Error processing research plan:", error);
+                startResearchBtn.disabled = false;
+                startResearchBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                    Start Comprehensive Research
+                `;
+                isResearchInProgress = false;
             }
         }
-
-         function processStreamChunk(chunk) {
-             // console.log("Received chunk:", chunk); // For debugging
-             switch (chunk.type) {
-                 case 'progress':
-                     updateProgress(chunk.data.percent, chunk.data.status);
-                     break;
-                 case 'step_update':
-                     addTimelineStep(chunk.data.title, chunk.data.description, chunk.data.status);
-                     // Update progress label if status changes
-                     if (chunk.data.status === 'in-progress') {
-                         currentStepLabel.textContent = `Working on: ${chunk.data.title}`;
-                     }
-                     break;
-                 case 'final_report':
-                     // Store final data, processing happens after stream closes
-                     currentResearchData = chunk.data;
-                     break;
-                 case 'log':
-                     // Log already handled in the reading loop for display
-                     break;
-                 case 'error':
-                      console.error("Server-side error:", chunk.data.message);
-                      // Error handled in the reading loop
-                      break;
-                 default:
-                     console.warn("Unknown stream chunk type:", chunk.type);
-             }
-         }
-
-        function completeResearch(finalData) {
+        
+        async function handleResearchStepResponse(response, stepIndex) {
+            // Check if the research plan and step are valid
+            if (!currentResearchPlan || !currentResearchPlan.steps || !Array.isArray(currentResearchPlan.steps) || 
+                stepIndex < 0 || stepIndex >= currentResearchPlan.steps.length) {
+                console.error("Invalid research plan or step index:", stepIndex, currentResearchPlan);
+                handleError("Error processing research step", new Error("Invalid research step or plan structure"));
+                return;
+            }
+            
+            // Get step info, with fallbacks in case properties are missing
+            const stepId = currentResearchPlan.steps[stepIndex].id || (stepIndex + 1);
+            const stepTitle = currentResearchPlan.steps[stepIndex].title || `Research Area ${stepIndex + 1}`;
+            
+            if (!response) {
+                updateTimelineStep(stepIndex + 1, 
+                    `Step ${stepId}: ${stepTitle}`, 
+                    `Error: Failed to complete research`, 'error');
+                isResearchInProgress = false;
+                return;
+            } 
+            
+            // Store response and update UI
+            researchResponses[stepIndex] = response;
+            updateTimelineStep(stepIndex + 1, 
+                `Step ${stepId}: ${stepTitle}`, 
+                'Research complete', 'complete');
+            
+            // Update progress
+            const progressPercent = 5 + Math.round((stepIndex + 1) * (85 / currentResearchPlan.steps.length));
+            updateProgress(progressPercent, `Completed Step ${stepIndex + 1} of ${currentResearchPlan.steps.length}`);
+            
+            // Move to next step
+            currentResearchStep++;
+            if (currentResearchStep < currentResearchPlan.steps.length) {
+                await startNextResearchStep();
+            } else {
+                // All research steps complete, start synthesis
+                await startSynthesis();
+            }
+        }
+        
+        async function handleSynthesisResponse(response) {
+            const synthesisStep = currentResearchPlan.steps.length + 1;
+            
+            if (!response) {
+                updateTimelineStep(synthesisStep, 'Synthesizing Research', 
+                    `Error: Failed to synthesize research`, 'error');
+                isResearchInProgress = false;
+                return;
+            } 
+            
+            updateTimelineStep(synthesisStep, 'Synthesizing Research', 
+                'Research synthesis complete', 'complete');
+            
+            // Update progress
             updateProgress(100, 'Research Complete');
-            addTimelineStep('Completion', 'Final report generated.', 'complete');
-
-             // Display final report
-             researchContent.innerHTML = marked.parse(finalData.report_markdown || '*No report content provided.*');
-             researchContent.setAttribute('data-markdown', finalData.report_markdown || '');
-
-             // Generate stats and insights (adapt based on actual finalData structure)
-             generateResearchStats(finalData.stats || {});
-             generateKeyInsights(finalData.insights || []);
-
-             // Show results, hide progress
-             researchProgressSection.classList.add('hidden');
-             researchResultsSection.classList.remove('hidden');
-             researchResultsSection.classList.add('animate-fade-in');
-
-            handleResearchEnd();
-            showNotification('Research complete!', 'success');
+            
+            // Display research results
+            researchContent.innerHTML = marked.parse(response);
+            researchContent.setAttribute('data-markdown', response);
+            
+            // Generate research stats
+            generateResearchStats();
+            
+            // Generate key insights
+            generateKeyInsights(response);
+            
+            // Show results section
+            researchResults.classList.remove('hidden');
+            
+            // Clear intervals
+            if (elapsedTimeInterval) {
+                clearInterval(elapsedTimeInterval);
+                elapsedTimeInterval = null;
+            }
+            
+            // Reset UI for next research
+            startResearchBtn.disabled = false;
+            startResearchBtn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </svg>
+                Start Comprehensive Research
+            `;
+            isResearchInProgress = false;
         }
-
-        function cancelResearch() {
-            if (isResearchInProgress && abortController) {
-                abortController.abort(); // This triggers the 'AbortError' in the fetch catch block
+        
+        // Helper functions
+        async function startNextResearchStep() {
+            if (!isResearchInProgress) return;
+            
+            const stepIndex = currentResearchStep;
+            
+            // Check if the research plan and step are valid
+            if (!currentResearchPlan || !currentResearchPlan.steps || !Array.isArray(currentResearchPlan.steps) || 
+                stepIndex < 0 || stepIndex >= currentResearchPlan.steps.length) {
+                console.error("Invalid research plan or step index:", stepIndex, currentResearchPlan);
+                handleError("Error researching step", new Error("Invalid research step or plan structure"));
+                return;
+            }
+            
+            const step = currentResearchPlan.steps[stepIndex];
+            
+            // Ensure step has id and title with fallbacks
+            const stepId = step.id || (stepIndex + 1);
+            const stepTitle = step.title || `Research Area ${stepIndex + 1}`;
+            
+            // Update UI to show current step as in progress
+            updateTimelineStep(stepIndex + 1, 
+                `Step ${stepId}: ${stepTitle}`, 
+                'Researching...', 'in-progress');
+            
+            // Update progress text
+            updateProgress(5 + Math.round(stepIndex * (85 / currentResearchPlan.steps.length)), 
+                `Researching: ${stepTitle}`);
+            
+            try {
+                // Reset streaming output
+                streamingOutput.innerHTML = '<p class="text-sm font-mono typing-animation">Initiating research for this step...</p>';
+                
+                // Fetch research for this step
+                const response = await fetchWithStreaming('/api/research/step', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        topic: researchTopicInput.value,
+                        step: step,
+                        model: document.getElementById('modelSelector').value,
+                        temperature: parseFloat(temperatureSlider.value),
+                        maxTokens: parseInt(document.getElementById('maxTokens').value)
+                    }),
+                    signal: abortController.signal
+                }, handleStreamingResearchUpdate);
+                
+                await handleResearchStepResponse(response, stepIndex);
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('Research step aborted');
+                } else {
+                    handleError(`Error researching step ${stepIndex + 1}`, error);
+                }
             }
         }
-
-        function handleResearchEnd(errorOccurred = false) {
-             isResearchInProgress = false;
-             if (elapsedTimeInterval) clearInterval(elapsedTimeInterval);
-             elapsedTimeInterval = null;
-
-             // Reset start button
-             startResearchBtn.disabled = false;
-             startResearchBtn.innerHTML = `
-                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                     <circle cx="11" cy="11" r="8"></circle>
-                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                 </svg>
-                 Start Research with MCP Agents
-             `;
-
-            if (errorOccurred) {
-                // Optionally hide progress and show input again on error
-                researchProgressSection.classList.add('hidden');
-                inputSection.classList.remove('hidden');
-                updateTimelineStep(progressSteps.children.length -1, null, 'Research failed', 'error');
+        
+        async function startSynthesis() {
+            if (!isResearchInProgress) return;
+            
+            // Validate research plan before proceeding
+            if (!currentResearchPlan || !currentResearchPlan.steps || !Array.isArray(currentResearchPlan.steps)) {
+                console.error("Invalid research plan for synthesis:", currentResearchPlan);
+                handleError('Error synthesizing research', new Error("Invalid research plan structure"));
+                return;
+            }
+            
+            const synthesisStep = currentResearchPlan.steps.length + 1;
+            
+            // Update UI
+            updateTimelineStep(synthesisStep, 'Synthesizing Research', 
+                'Creating comprehensive research report...', 'in-progress');
+            
+            // Update progress
+            updateProgress(90, 'Synthesizing Research Findings');
+            
+            try {
+                // Reset streaming output
+                streamingOutput.innerHTML = '<p class="text-sm font-mono typing-animation">Synthesizing comprehensive research report...</p>';
+                
+                // Log the research plan and responses before synthesis for debugging
+                console.log("Starting synthesis with research plan:", 
+                    JSON.stringify({
+                        stepsCount: currentResearchPlan.steps.length,
+                        hasResponses: researchResponses.length > 0
+                    })
+                );
+                
+                const response = await fetchWithStreaming('/api/research/synthesize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        topic: researchTopicInput.value,
+                        depth: researchDepthSelect.value,
+                        style: document.getElementById('researchStyle').value,
+                        model: document.getElementById('modelSelector').value,
+                        temperature: parseFloat(temperatureSlider.value),
+                        maxTokens: parseInt(document.getElementById('maxTokens').value)
+                    }),
+                    signal: abortController.signal
+                }, handleStreamingResearchUpdate);
+                
+                await handleSynthesisResponse(response);
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('Research synthesis aborted');
+                } else {
+                    handleError('Error synthesizing research', error);
+                }
             }
         }
-
-        function resetUI() {
-             researchResultsSection.classList.add('hidden');
-             researchProgressSection.classList.add('hidden');
-             inputSection.classList.remove('hidden');
-             introCard.classList.add('hidden'); // Keep input section visible
-             handleResearchEnd(); // Ensure button/state is reset
-             // researchTopicInput.value = ''; // Optional: Clear input
+        
+        function generateResearchStats() {
+            // Calculate statistics from research responses
+            const totalWordCount = researchResponses.reduce((sum, response) => {
+                return sum + (response ? response.split(/\s+/).length : 0);
+            }, 0);
+            
+            const elapsedTimeInMinutes = startTime ? Math.round((Date.now() - startTime) / 60000) : 0;
+            
+            // Generate stats HTML
+            researchStats.innerHTML = `
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-primary">${currentResearchPlan.steps.length}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Research Areas</div>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-primary">${totalWordCount.toLocaleString()}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Total Words</div>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-primary">${elapsedTimeInMinutes}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Minutes to Complete</div>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-primary">${document.getElementById('modelSelector').value === 'deepseek' ? 'DeepSeek v3' : 'Llama 4'}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">AI Model Used</div>
+                    </div>
+                </div>
+                <div class="mt-4 bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+                    <h4 class="text-sm font-medium mb-2">Research Style</h4>
+                    <div class="flex items-center">
+                        <div class="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2.5">
+                            <div class="bg-primary h-2.5 rounded-full" style="width: ${document.getElementById('researchStyle').value === 'standard' ? '60%' : 
+                                                                                document.getElementById('researchStyle').value === 'academic' ? '95%' : 
+                                                                                document.getElementById('researchStyle').value === 'journalistic' ? '75%' : '85%'}"></div>
+                        </div>
+                        <span class="ml-2 text-sm">${document.getElementById('researchStyle').value.charAt(0).toUpperCase() + document.getElementById('researchStyle').value.slice(1)}</span>
+                    </div>
+                </div>
+            `;
         }
-
+        
+        function generateKeyInsights(synthesisContent) {
+            // Extract insights from synthesis content
+            // This is a simple extraction - in a real implementation, you would use more sophisticated NLP
+            const insights = [];
+            const lines = synthesisContent.split('\n');
+            
+            let insightSection = false;
+            for (const line of lines) {
+                if (line.includes('Key Insights') || line.includes('key insights')) {
+                    insightSection = true;
+                    continue;
+                }
+                
+                if (insightSection && line.startsWith('###')) {
+                    insightSection = false;
+                }
+                
+                if (insightSection && (line.startsWith('- ') || line.startsWith('* ') || line.match(/^\d+\.\s/))) {
+                    insights.push(line.replace(/^[- *]\d+\.\s*/, '').replace(/^\d+\.\s*/, ''));
+                }
+            }
+            
+            // If no insights were found, add default ones
+            if (insights.length === 0) {
+                insights.push(
+                    "The topic demonstrates complex interconnections across multiple domains",
+                    "Historical development reveals patterns that influence current understanding",
+                    "Technical foundations are evolving rapidly, creating new opportunities",
+                    "Economic and social dimensions are increasingly recognized as critical"
+                );
+            }
+            
+            // Limit to max 5 insights
+            const limitedInsights = insights.slice(0, 5);
+            
+            // Generate HTML
+            keyInsights.innerHTML = limitedInsights.map(insight => `
+                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 flex items-start">
+                    <div class="text-primary mr-3 flex-shrink-0 mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm">${insight}</p>
+                </div>
+            `).join('');
+        }
+        
+        function addTimelineStep(title, description, status) {
+            const stepIndex = progressSteps.children.length;
+            const step = document.createElement('div');
+            step.classList.add('timeline-step', 'relative', 'pl-8', 'pb-6');
+            
+            const statusIndicator = getStatusIndicator(status);
+            const stepContent = `
+                <div class="timeline-line"></div>
+                <div class="absolute left-0 top-0">
+                    ${statusIndicator}
+                </div>
+                <div class="mb-1 text-sm font-medium">${title}</div>
+                <p class="text-xs text-gray-500 dark:text-gray-400 step-description">${description}</p>
+            `;
+            
+            step.innerHTML = stepContent;
+            progressSteps.appendChild(step);
+        }
+        
+        function updateTimelineStep(index, title, description, status) {
+            const steps = progressSteps.children;
+            if (!steps[index]) return;
+            
+            const step = steps[index];
+            
+            // Update status indicator
+            const statusIndicatorContainer = step.querySelector('.absolute');
+            if (statusIndicatorContainer) {
+                statusIndicatorContainer.innerHTML = getStatusIndicator(status);
+            }
+            
+            // Update description
+            const descriptionElement = step.querySelector('.step-description');
+            if (descriptionElement) {
+                descriptionElement.textContent = description;
+            }
+            
+            // Update title if needed
+            const titleElement = step.querySelector('.text-sm.font-medium');
+            if (titleElement && title) {
+                titleElement.textContent = title;
+            }
+        }
+        
+        function getStatusIndicator(status) {
+            switch(status) {
+                case 'waiting':
+                    return `<div class="w-6 h-6 rounded-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-500 dark:text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v6l4 2"></path>
+                        </svg>
+                    </div>`;
+                case 'in-progress':
+                    return `<div class="w-6 h-6 rounded-full flex items-center justify-center bg-primary bg-opacity-20">
+                        <svg class="animate-spin h-3 w-3 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </div>`;
+                case 'complete':
+                    return `<div class="w-6 h-6 rounded-full flex items-center justify-center bg-green-100 dark:bg-green-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-green-600 dark:text-green-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6 9 17l-5-5"></path>
+                        </svg>
+                    </div>`;
+                case 'error':
+                    return `<div class="w-6 h-6 rounded-full flex items-center justify-center bg-red-100 dark:bg-red-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-red-600 dark:text-red-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
+                    </div>`;
+                default:
+                    return `<div class="w-6 h-6 rounded-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-500 dark:text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v.01"></path>
+                            <path d="M12 8v4"></path>
+                        </svg>
+                    </div>`;
+            }
+        }
+        
+        function updateProgress(percent, statusText) {
+            progressBar.style.width = `${percent}%`;
+            progressPercentage.textContent = `${percent}%`;
+            currentStepLabel.textContent = statusText;
+        }
+        
         function updateElapsedTime() {
             if (!startTime) return;
+            
             const elapsed = Date.now() - startTime;
             const minutes = Math.floor(elapsed / 60000);
             const seconds = Math.floor((elapsed % 60000) / 1000);
+            
             elapsedTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
-
-         function addTimelineStep(title, description, status) {
-             // If a step with the same title exists and we are updating it to 'in-progress' or 'complete', update it. Otherwise, add a new step.
-             let existingStep = null;
-             const steps = progressSteps.children;
-             for (let i = 0; i < steps.length; i++) {
-                 const titleElement = steps[i].querySelector('.step-title');
-                 if (titleElement && titleElement.textContent === title) {
-                      existingStep = steps[i];
-                      break;
-                 }
-             }
-
-             if (existingStep && (status === 'in-progress' || status === 'complete' || status === 'error')) {
-                 updateExistingTimelineStep(existingStep, description, status);
-             } else if (!existingStep || status === 'waiting') { // Add new step if not found or if it's just waiting
-                  const step = document.createElement('div');
-                  step.className = 'timeline-step'; // Base classes
-
-                  const statusIndicator = getStatusIndicator(status);
-                  const stepContent = `
-                     <div class="timeline-line"></div>
-                     <div class="timeline-indicator absolute left-0 top-0">
-                         ${statusIndicator}
-                     </div>
-                     <div class="mb-1 text-sm font-medium step-title">${title}</div>
-                     <p class="text-xs text-gray-500 dark:text-gray-400 step-description">${description}</p>
-                 `;
-                  step.innerHTML = stepContent;
-                  progressSteps.appendChild(step);
-             }
-              progressSteps.scrollTop = progressSteps.scrollHeight;
-         }
-
-        function updateExistingTimelineStep(stepElement, description, status) {
-             const indicatorContainer = stepElement.querySelector('.timeline-indicator');
-             const descriptionElement = stepElement.querySelector('.step-description');
-
-             if (indicatorContainer) {
-                 indicatorContainer.innerHTML = getStatusIndicator(status);
-             }
-             if (descriptionElement) {
-                 descriptionElement.textContent = description;
-             }
-        }
-
-        function updateTimelineStep(index, title, description, status) {
-            const steps = progressSteps.children;
-            if (index >= 0 && index < steps.length) {
-                const step = steps[index];
-                
-                if (title) {
-                    const titleElem = step.querySelector('.step-title');
-                    if (titleElem) titleElem.textContent = title;
-                }
-                
-                if (description) {
-                    const descElem = step.querySelector('.step-description');
-                    if (descElem) descElem.textContent = description;
-                }
-                
-                if (status) {
-                    const indicatorElem = step.querySelector('.timeline-indicator');
-                    if (indicatorElem) indicatorElem.innerHTML = getStatusIndicator(status);
-                }
+        
+        function handleError(message, error) {
+            console.error(`${message}:`, error);
+            showError(`${message}: ${error.message || 'Unknown error'}`);
+            
+            // Reset UI
+            startResearchBtn.disabled = false;
+            startResearchBtn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </svg>
+                Start Comprehensive Research
+            `;
+            isResearchInProgress = false;
+            
+            // Clear intervals
+            if (elapsedTimeInterval) {
+                clearInterval(elapsedTimeInterval);
+                elapsedTimeInterval = null;
+            }
+            
+            if (streamingInterval) {
+                clearInterval(streamingInterval);
+                streamingInterval = null;
             }
         }
-
-        function getStatusIndicator(status) {
-             // Use Tailwind classes for styling indicators
-             let baseClasses = "w-6 h-6 rounded-full flex items-center justify-center";
-             let iconSvg = '';
-             let bgColor = '';
-             let iconColor = '';
-
-             switch (status) {
-                 case 'waiting':
-                     bgColor = 'bg-gray-300 dark:bg-gray-600';
-                     iconColor = 'text-gray-500 dark:text-gray-400';
-                     iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.414L11 10.586V6z" clip-rule="evenodd" /></svg>`;
-                     break;
-                 case 'in-progress':
-                     bgColor = 'bg-primary/20 dark:bg-primary/30';
-                     iconColor = 'text-primary';
-                     iconSvg = `<svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
-                     break;
-                 case 'complete':
-                     bgColor = 'bg-green-100 dark:bg-green-900';
-                     iconColor = 'text-green-600 dark:text-green-300';
-                     iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>`;
-                     break;
-                 case 'error':
-                     bgColor = 'bg-red-100 dark:bg-red-900';
-                     iconColor = 'text-red-600 dark:text-red-300';
-                     iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>`;
-                     break;
-                 default: // Unknown or initial state
-                     bgColor = 'bg-gray-300 dark:bg-gray-600';
-                     iconColor = 'text-gray-500 dark:text-gray-400';
-                     iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-             }
-
-             return `<div class="${baseClasses} ${bgColor} ${iconColor}">${iconSvg}</div>`;
-         }
-
-         function updateProgress(percent, statusText) {
-             const clampedPercent = Math.max(0, Math.min(100, percent)); // Ensure percent is between 0 and 100
-             progressBar.style.width = `${clampedPercent}%`;
-             progressPercentage.textContent = `${clampedPercent}%`;
-             currentStepLabel.textContent = statusText;
-         }
-
-        // --- Result Handling ---
-         function generateResearchStats(stats) {
-             const totalDuration = startTime ? Math.round((Date.now() - startTime) / 1000) : (stats.duration_seconds || 0);
-             const minutes = Math.floor(totalDuration / 60);
-             const seconds = totalDuration % 60;
-
-             // Default values if stats are missing
-             const steps = stats.steps_completed || 'N/A';
-             const sources = stats.sources_consulted || 'N/A';
-             const words = stats.word_count || 'N/A';
-             const timeStr = `${minutes}m ${seconds}s`;
-             const agentsUsed = selectedAgents.length;
-
-             researchStats.innerHTML = `
-                 <div class="grid grid-cols-2 gap-4">
-                     <div class="bg-gray-100 dark:bg-dark-input rounded-lg p-4 text-center border border-gray-200 dark:border-gray-700">
-                         <div class="text-2xl font-bold text-primary">${steps}</div>
-                         <div class="text-sm text-gray-600 dark:text-gray-400">Steps Executed</div>
-                     </div>
-                     <div class="bg-gray-100 dark:bg-dark-input rounded-lg p-4 text-center border border-gray-200 dark:border-gray-700">
-                         <div class="text-2xl font-bold text-primary">${sources}</div>
-                         <div class="text-sm text-gray-600 dark:text-gray-400">Sources Consulted</div>
-                     </div>
-                     <div class="bg-gray-100 dark:bg-dark-input rounded-lg p-4 text-center border border-gray-200 dark:border-gray-700">
-                         <div class="text-2xl font-bold text-primary">${words}</div>
-                         <div class="text-sm text-gray-600 dark:text-gray-400">Words Generated</div>
-                     </div>
-                     <div class="bg-gray-100 dark:bg-dark-input rounded-lg p-4 text-center border border-gray-200 dark:border-gray-700">
-                         <div class="text-2xl font-bold text-primary">${timeStr}</div>
-                         <div class="text-sm text-gray-600 dark:text-gray-400">Total Time</div>
-                     </div>
-                 </div>
-                 <div class="mt-4 bg-gray-100 dark:bg-dark-input rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-                     <div class="flex items-center justify-between mb-2">
-                         <div class="text-sm font-medium">MCP Agents Used</div>
-                         <div class="text-sm font-bold text-primary">${agentsUsed}</div>
-                     </div>
-                     <div class="flex flex-wrap gap-2">
-                         ${selectedAgents.map(agent => {
-                             let bgColor, textColor;
-                             switch(agent) {
-                                 case 'web-search':
-                                     bgColor = 'bg-blue-100 dark:bg-blue-900/30';
-                                     textColor = 'text-blue-800 dark:text-blue-300';
-                                     break;
-                                 case 'data-analysis':
-                                     bgColor = 'bg-green-100 dark:bg-green-900/30';
-                                     textColor = 'text-green-800 dark:text-green-300';
-                                     break;
-                                 case 'synthesis':
-                                     bgColor = 'bg-purple-100 dark:bg-purple-900/30';
-                                     textColor = 'text-purple-800 dark:text-purple-300';
-                                     break;
-                                 case 'fact-checking':
-                                     bgColor = 'bg-yellow-100 dark:bg-yellow-900/30';
-                                     textColor = 'text-yellow-800 dark:text-yellow-300';
-                                     break;
-                                 default:
-                                     bgColor = 'bg-gray-100 dark:bg-gray-800';
-                                     textColor = 'text-gray-800 dark:text-gray-300';
-                             }
-                             return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${bgColor} ${textColor}">${agent.replace('-', ' ')}</span>`;
-                         }).join('')}
-                     </div>
-                 </div>
-             `;
-         }
-
-         function generateKeyInsights(insights) {
-             if (!insights || insights.length === 0) {
-                 keyInsights.innerHTML = '<p class="text-sm text-gray-500 dark:text-gray-400">No key insights were extracted.</p>';
-                 return;
-             }
-
-             keyInsights.innerHTML = insights.map(insight => `
-                 <div class="bg-gray-100 dark:bg-dark-input rounded-lg p-3 flex items-start border border-gray-200 dark:border-gray-700">
-                     <div class="text-primary mr-3 flex-shrink-0 mt-1">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
-                     </div>
-                     <p class="text-sm">${insight}</p>
-                 </div>
-             `).join('');
-         }
-
-        function copyResults() {
-            const markdownContent = researchContent.getAttribute('data-markdown');
-            if (markdownContent) {
-                navigator.clipboard.writeText(markdownContent)
-                    .then(() => showNotification('Markdown copied to clipboard.', 'success'))
-                    .catch(err => showNotification(`Failed to copy: ${err}`, 'error'));
-            } else {
-                showNotification('No content to copy.', 'info');
-            }
+        
+        function showError(message) {
+            showNotification(message, 'error');
         }
-
-        function downloadResults() {
-             const markdownContent = researchContent.getAttribute('data-markdown');
-             const topic = researchTopicInput.value.trim().replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'research_report';
-             const filename = `${topic}.md`;
-
-             if (markdownContent) {
-                 const blob = new Blob([markdownContent], { type: 'text/markdown;charset=utf-8' });
-                 const link = document.createElement('a');
-                 link.href = URL.createObjectURL(blob);
-                 link.download = filename;
-                 document.body.appendChild(link);
-                 link.click();
-                 document.body.removeChild(link);
-                 URL.revokeObjectURL(link.href);
-                 showNotification('Markdown file download initiated.', 'success');
-             } else {
-                 showNotification('No content to download.', 'info');
-             }
-        }
-
-        // --- Utility Functions ---
+        
         function showNotification(message, type = 'info') {
-             const notificationId = `notif-${Date.now()}`;
-             const notificationDiv = document.createElement('div');
-             notificationDiv.id = notificationId;
-             notificationDiv.className = `flex items-center p-4 mb-2 rounded-lg shadow-lg text-sm transition-all duration-300 ease-out transform translate-x-full opacity-0 animate-slide-in ${
-                 type === 'error' ? 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 border border-red-300 dark:border-red-700' :
-                 type === 'success' ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200 border border-green-300 dark:border-green-700' :
-                 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 border border-blue-300 dark:border-blue-700' // Default to info
-             }`;
-
-             const iconSvg = type === 'error' ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v4a1 1 0 102 0V5zm-1 7a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" /></svg>`
-                           : type === 'success' ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l5-5z" clip-rule="evenodd" /></svg>`
-                           : `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>`; // Info icon
-
-             notificationDiv.innerHTML = `
-                ${iconSvg}
-                <span class="flex-1">${message}</span>
-                <button onclick="dismissNotification('${notificationId}')" class="ml-4 -mr-1 p-1 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
-                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                 </button>
-             `;
-             notificationArea.appendChild(notificationDiv);
-
-             // Trigger animation
-             requestAnimationFrame(() => {
-                 notificationDiv.classList.remove('translate-x-full', 'opacity-0');
-                 notificationDiv.classList.add('translate-x-0', 'opacity-100');
-             });
-
-             // Auto-dismiss after 5 seconds
-             setTimeout(() => {
-                 dismissNotification(notificationId);
-             }, 5000);
-         }
-
-        window.dismissNotification = (id) => { // Make it globally accessible
-            const notification = document.getElementById(id);
-            if (notification) {
-                notification.classList.remove('translate-x-0', 'opacity-100');
-                notification.classList.add('translate-x-full', 'opacity-0');
+            const notificationDiv = document.createElement('div');
+            notificationDiv.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 animate-fade-in transition-opacity duration-500 ${
+                type === 'error' ? 'bg-red-500 text-white' : 
+                type === 'success' ? 'bg-green-500 text-white' : 
+                'bg-blue-500 text-white'
+            }`;
+            
+            const icon = type === 'error' ? `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="m15 9-6 6"></path>
+                    <path d="m9 9 6 6"></path>
+                </svg>
+            ` : type === 'success' ? `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6 9 17l-5-5"></path>
+                </svg>
+            ` : `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v.01"></path>
+                    <path d="M12 8v4"></path>
+                </svg>
+            `;
+            
+            notificationDiv.innerHTML = `<div class="flex items-center">${icon}<span>${message}</span></div>`;
+            
+            document.body.appendChild(notificationDiv);
+            
+            setTimeout(() => {
+                notificationDiv.classList.add('opacity-0');
                 setTimeout(() => {
-                    notification.remove();
-                }, 300); // Remove from DOM after transition
-            }
+                    document.body.removeChild(notificationDiv);
+                }, 500);
+            }, 4000);
         }
-
-        // Add keyframe animation styles dynamically
-        const styleSheet = document.createElement("style");
-        styleSheet.type = "text/css";
-        styleSheet.innerText = `
-            @keyframes slide-in {
-              from { transform: translateX(100%); opacity: 0; }
-              to { transform: translateX(0); opacity: 1; }
-            }
-            .animate-slide-in { animation: slide-in 0.3s ease-out forwards; }
-        `;
-        document.head.appendChild(styleSheet);
-
     </script>
-</body>
-</html>
+
+
+
+</body></html>
