@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+httpx
+pydantic
+openai # Add this line
+python-dotenv
+# Add other libraries if used (e.g., beautifulsoup4 for scraping)
