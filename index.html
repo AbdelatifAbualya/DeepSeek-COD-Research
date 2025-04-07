@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Research Agent (MCP Inspired)</title>
+    <title>DeepSeek COD Research - MCP Enhanced</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
      <script>
@@ -121,6 +121,19 @@
          .dark select {
              background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
          }
+
+        /* MCP Agent cards styling */
+        .agent-card {
+            transition: all 0.3s ease;
+        }
+        .agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .agent-selected {
+            border: 2px solid #5D5CDE;
+            background-color: rgba(93, 92, 222, 0.05);
+        }
     </style>
 </head>
 <body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text transition-colors duration-300 font-sans">
@@ -131,12 +144,18 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
                     </svg>
-                    <h1 class="text-xl md:text-2xl font-bold">Advanced Research Agent</h1>
+                    <h1 class="text-xl md:text-2xl font-bold">DeepSeek COD Research</h1>
                 </div>
-                <button id="themeToggle" aria-label="Toggle Dark Mode" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                     <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                     <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-300 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                </button>
+                <div class="flex items-center space-x-3">
+                    <span class="hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
+                        <span class="h-2 w-2 rounded-full bg-green-500 mr-1"></span>
+                        MCP Enabled
+                    </span>
+                    <button id="themeToggle" aria-label="Toggle Dark Mode" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                         <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                         <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-300 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -150,7 +169,7 @@
                              </div>
                              <h2 class="text-2xl md:text-3xl font-bold">Start Your Research</h2>
                          </div>
-                         <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">Define your research topic and configure the agent to begin the investigation.</p>
+                         <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">Define your research topic and configure the MCP-powered agents to begin the investigation.</p>
                           <button id="showInputBtn" class="bg-primary hover:bg-primaryDark text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
                              Configure Research
                           </button>
@@ -188,39 +207,201 @@
                                  <option value="bullet_points">Bullet Point Summary</option>
                              </select>
                          </div>
+                         <div>
+                             <label for="codMode" class="block text-sm font-medium mb-2">COD Reasoning Mode</label>
+                             <select id="codMode" class="w-full px-4 py-3 text-base rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/50 focus:outline-none bg-light-input dark:bg-dark-input dark:border-gray-600 dark:text-white transition duration-200">
+                                 <option value="default" selected>Default</option>
+                                 <option value="intensive">Intensive</option>
+                                 <option value="extensive">Extensive</option>
+                             </select>
+                         </div>
                      </div>
                  </div>
+                 
                  <div class="mt-6">
-                     <label class="block text-sm font-medium mb-2">Agent Capabilities (Select tools to enable)</label>
-                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                         <div class="flex items-center p-3 bg-light-input dark:bg-dark-input rounded-lg border border-gray-300 dark:border-gray-600">
-                             <input type="checkbox" id="webSearch" name="agentCapabilities" value="web_search" class="w-4 h-4 text-primary border-gray-400 dark:border-gray-500 rounded focus:ring-primary focus:ring-offset-light-input dark:focus:ring-offset-dark-input mr-2" checked>
-                             <label for="webSearch" class="text-sm">Web Search</label>
-                         </div>
-                         <div class="flex items-center p-3 bg-light-input dark:bg-dark-input rounded-lg border border-gray-300 dark:border-gray-600">
-                             <input type="checkbox" id="dataAnalysis" name="agentCapabilities" value="data_analysis" class="w-4 h-4 text-primary border-gray-400 dark:border-gray-500 rounded focus:ring-primary focus:ring-offset-light-input dark:focus:ring-offset-dark-input mr-2" checked>
-                             <label for="dataAnalysis" class="text-sm">Data Analysis</label>
-                         </div>
-                         <div class="flex items-center p-3 bg-light-input dark:bg-dark-input rounded-lg border border-gray-300 dark:border-gray-600">
-                             <input type="checkbox" id="fileSystem" name="agentCapabilities" value="filesystem" class="w-4 h-4 text-primary border-gray-400 dark:border-gray-500 rounded focus:ring-primary focus:ring-offset-light-input dark:focus:ring-offset-dark-input mr-2">
-                             <label for="fileSystem" class="text-sm">File System Access</label>
-                         </div>
-                         <div class="flex items-center p-3 bg-light-input dark:bg-dark-input rounded-lg border border-gray-300 dark:border-gray-600">
-                             <input type="checkbox" id="githubAccess" name="agentCapabilities" value="github" class="w-4 h-4 text-primary border-gray-400 dark:border-gray-500 rounded focus:ring-primary focus:ring-offset-light-input dark:focus:ring-offset-dark-input mr-2">
-                             <label for="githubAccess" class="text-sm">GitHub Access</label>
-                         </div>
-                          <div class="flex items-center p-3 bg-light-input dark:bg-dark-input rounded-lg border border-gray-300 dark:border-gray-600">
-                             <input type="checkbox" id="webScraping" name="agentCapabilities" value="web_scraping" class="w-4 h-4 text-primary border-gray-400 dark:border-gray-500 rounded focus:ring-primary focus:ring-offset-light-input dark:focus:ring-offset-dark-input mr-2">
-                             <label for="webScraping" class="text-sm">Web Scraping</label>
-                         </div>
-                         </div>
-                 </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-sm font-medium">MCP Agents</label>
+                        <button id="toggleAgentList" class="text-primary hover:text-primaryDark text-sm font-medium flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                            View All Agents
+                        </button>
+                    </div>
+                    
+                    <div id="agentSelectionGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-2">
+                        <!-- Default included agents -->
+                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer agent-selected" data-agent-id="web-search">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-blue-100 dark:bg-blue-900 p-2 mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 dark:text-blue-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Web Search</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Perplexity API</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer agent-selected" data-agent-id="data-analysis">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-green-100 dark:bg-green-900 p-2 mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600 dark:text-green-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 3v18h18"></path>
+                                        <path d="m19 9-5 5-4-4-3 3"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Data Analysis</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Fireworks LLM</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer agent-selected" data-agent-id="synthesis">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-purple-100 dark:bg-purple-900 p-2 mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600 dark:text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">COD Synthesis</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">DeepSeek</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Expanded agent list (initially hidden) -->
+                    <div id="expandedAgentList" class="hidden mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="fact-checking">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-yellow-100 dark:bg-yellow-900 p-2 mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600 dark:text-yellow-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"></path>
+                                        <path d="m9 12 2 2 4-4"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Fact Checking</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="visualization">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-pink-100 dark:bg-pink-900 p-2 mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-600 dark:text-pink-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect width="16" height="18" x="4" y="3" rx="2"></rect>
+                                        <circle cx="9" cy="9" r="2"></circle>
+                                        <path d="M9 15v-2"></path>
+                                        <path d="M15 15v-6"></path>
+                                        <path d="M15 9h-3"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Visualization</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="academic-search">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-indigo-100 dark:bg-indigo-900 p-2 mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 dark:text-indigo-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Academic Search</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="code-generation">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-cyan-100 dark:bg-cyan-900 p-2 mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-600 dark:text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="16 18 22 12 16 6"></polyline>
+                                        <polyline points="8 6 2 12 8 18"></polyline>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Code Generation</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="expert-opinions">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-orange-100 dark:bg-orange-900 p-2 mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-orange-600 dark:text-orange-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 6H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h.28"></path>
+                                        <path d="M7 15v2a2 2 0 0 0 2 2h1.28"></path>
+                                        <path d="M15 18h4a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3"></path>
+                                        <path d="M12 9h.01"></path>
+                                        <path d="M11 12h.01"></path>
+                                        <path d="M12 15h.01"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Expert Opinions</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="agent-card rounded-lg bg-light-input dark:bg-dark-input border border-gray-300 dark:border-gray-600 p-3 cursor-pointer" data-agent-id="trend-analysis">
+                            <div class="flex items-center">
+                                <div class="rounded-full bg-red-100 dark:bg-red-900 p-2 mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600 dark:text-red-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Trend Analysis</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">MCP Service</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <div class="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-600 dark:text-yellow-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-yellow-800 dark:text-yellow-200">API Keys Detected</h3>
+                                <div class="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
+                                    <p>Vercel environment includes Perplexity API and Fireworks API keys. Additional MCP agents may require configuration.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <button id="startResearch" class="w-full mt-6 bg-primary hover:bg-primaryDark text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                          <circle cx="11" cy="11" r="8"></circle>
                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                      </svg>
-                    Start Research
+                    Start Research with MCP Agents
                 </button>
             </section>
 
@@ -246,8 +427,9 @@
                      <span id="progressPercentage" class="text-primary">0%</span>
                 </div>
                 <div id="progressSteps" class="space-y-1 mb-6 max-h-60 overflow-y-auto pr-2">
-                    </div>
-                <h3 class="text-lg font-semibold mb-2">Live Agent Log:</h3>
+                    <!-- Timeline steps will be added here dynamically -->
+                </div>
+                <h3 class="text-lg font-semibold mb-2">MCP Agent Activity:</h3>
                  <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 mb-4 max-h-[420px] overflow-y-auto border border-gray-200 dark:border-gray-700" id="streamingOutput">
                      <div class="text-sm font-mono text-gray-700 dark:text-gray-300 leading-relaxed typing-animation">Waiting for agent activity...</div>
                  </div>
@@ -325,7 +507,7 @@
 
         <footer class="border-t border-gray-200 dark:border-gray-700 py-6 mt-8">
             <div class="container max-w-6xl mx-auto px-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                <p>Advanced Research Agent - Powered by Vercel & MCP Concepts</p>
+                <p>DeepSeek COD Research - Powered by MCP Agents</p>
             </div>
         </footer>
     </div>
@@ -371,7 +553,10 @@
         const researchTopicInput = document.getElementById('researchTopic');
         const researchDepthSelect = document.getElementById('researchDepth');
         const researchStyleSelect = document.getElementById('researchStyle');
-        const agentCapabilityCheckboxes = document.querySelectorAll('input[name="agentCapabilities"]');
+        const codModeSelect = document.getElementById('codMode');
+        const toggleAgentListBtn = document.getElementById('toggleAgentList');
+        const expandedAgentList = document.getElementById('expandedAgentList');
+        const agentCards = document.querySelectorAll('.agent-card');
 
         const researchProgressSection = document.getElementById('researchProgress');
         const progressSteps = document.getElementById('progressSteps');
@@ -393,6 +578,7 @@
         let elapsedTimeInterval = null;
         let abortController = null;
         let currentResearchData = null; // To store final results for copy/download
+        let selectedAgents = ['web-search', 'data-analysis', 'synthesis']; // Default selected agents
 
         // --- Event Listeners ---
         showInputBtn.addEventListener('click', () => {
@@ -406,6 +592,42 @@
         newResearchBtn.addEventListener('click', resetUI);
         copyResultsBtn.addEventListener('click', copyResults);
         downloadResultsBtn.addEventListener('click', downloadResults);
+
+        // Toggle expanded agent list
+        toggleAgentListBtn.addEventListener('click', () => {
+            const isHidden = expandedAgentList.classList.contains('hidden');
+            expandedAgentList.classList.toggle('hidden');
+            toggleAgentListBtn.innerHTML = isHidden ? 
+                `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="18 15 12 9 6 15"></polyline>
+                </svg> Hide Additional Agents` : 
+                `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg> View All Agents`;
+        });
+
+        // Agent selection functionality
+        agentCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const agentId = card.getAttribute('data-agent-id');
+                
+                if (card.classList.contains('agent-selected')) {
+                    // Don't allow deselecting the synthesis agent
+                    if (agentId === 'synthesis') {
+                        showNotification('The COD Synthesis agent is required and cannot be deselected', 'info');
+                        return;
+                    }
+                    
+                    card.classList.remove('agent-selected');
+                    selectedAgents = selectedAgents.filter(id => id !== agentId);
+                } else {
+                    card.classList.add('agent-selected');
+                    if (!selectedAgents.includes(agentId)) {
+                        selectedAgents.push(agentId);
+                    }
+                }
+            });
+        });
 
         // --- Core Functions ---
 
@@ -423,7 +645,7 @@
 
             // Reset UI for progress
             progressSteps.innerHTML = '';
-            streamingOutput.innerHTML = '<div class="text-sm font-mono text-gray-700 dark:text-gray-300 leading-relaxed typing-animation">Initializing research process...</div>';
+            streamingOutput.innerHTML = '<div class="text-sm font-mono text-gray-700 dark:text-gray-300 leading-relaxed typing-animation">Initializing MCP agent network...</div>';
             researchProgressSection.classList.remove('hidden');
             researchProgressSection.classList.add('animate-fade-in');
             researchResultsSection.classList.add('hidden');
@@ -446,14 +668,10 @@
             elapsedTimeInterval = setInterval(updateElapsedTime, 1000);
 
             updateProgress(0, 'Initializing...');
-            addTimelineStep('Initiation', 'Starting the research process...', 'in-progress');
+            addTimelineStep('MCP Initialization', 'Connecting to agent network...', 'in-progress');
 
             // --- Call Backend API ---
             try {
-                const selectedCapabilities = Array.from(agentCapabilityCheckboxes)
-                                                 .filter(cb => cb.checked)
-                                                 .map(cb => cb.value);
-
                 const response = await fetch('/api/research', {
                     method: 'POST',
                     headers: {
@@ -463,8 +681,8 @@
                         topic: researchTopic,
                         depth: researchDepthSelect.value,
                         style: researchStyleSelect.value,
-                        capabilities: selectedCapabilities
-                        // Add any other parameters your backend expects
+                        cod_mode: codModeSelect.value,
+                        capabilities: selectedAgents
                     }),
                     signal: abortController.signal,
                 });
@@ -484,7 +702,6 @@
                 let buffer = '';
                 let fullLog = ''; // Accumulate logs for the streaming output
                 streamingOutput.innerHTML = ''; // Clear initial message
-
 
                 while (true) {
                     const { done, value } = await reader.read();
@@ -507,7 +724,19 @@
                                 if (chunk.type === 'log' || chunk.type === 'step_update' || chunk.type === 'progress') {
                                      const logEntry = document.createElement('div');
                                      logEntry.className = 'text-sm font-mono text-gray-700 dark:text-gray-300 leading-relaxed mb-1';
-                                     logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${chunk.data.message || chunk.data.status || `${chunk.data.percent}%`}`;
+                                     
+                                     // Add agent icon if this is from an MCP agent
+                                     if (chunk.data.agent) {
+                                        logEntry.innerHTML = `
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary mr-1">
+                                                ${chunk.data.agent}
+                                            </span>
+                                            <span>[${new Date().toLocaleTimeString()}]</span> ${chunk.data.message || chunk.data.status || `${chunk.data.percent}%`}
+                                        `;
+                                     } else {
+                                        logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${chunk.data.message || chunk.data.status || `${chunk.data.percent}%`}`;
+                                     }
+                                     
                                      streamingOutput.appendChild(logEntry);
                                      streamingOutput.scrollTop = streamingOutput.scrollHeight; // Auto-scroll
                                 } else if (chunk.type === 'final_report') {
@@ -540,14 +769,12 @@
                      }
                  }
 
-
                  // Research considered complete once stream ends, assuming final chunk contains results
                 if (currentResearchData) { // Ensure final data was received
                     completeResearch(currentResearchData);
                 } else {
                      throw new Error("Research finished, but no final report data was received from the server.");
                 }
-
 
             } catch (error) {
                  if (error.name === 'AbortError') {
@@ -591,7 +818,6 @@
              }
          }
 
-
         function completeResearch(finalData) {
             updateProgress(100, 'Research Complete');
             addTimelineStep('Completion', 'Final report generated.', 'complete');
@@ -613,7 +839,6 @@
             showNotification('Research complete!', 'success');
         }
 
-
         function cancelResearch() {
             if (isResearchInProgress && abortController) {
                 abortController.abort(); // This triggers the 'AbortError' in the fetch catch block
@@ -632,7 +857,7 @@
                      <circle cx="11" cy="11" r="8"></circle>
                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                  </svg>
-                 Start Research
+                 Start Research with MCP Agents
              `;
 
             if (errorOccurred) {
@@ -647,8 +872,7 @@
              researchResultsSection.classList.add('hidden');
              researchProgressSection.classList.add('hidden');
              inputSection.classList.remove('hidden');
-             introCard.classList.remove('hidden'); // Show intro card again
-             inputSection.classList.add('hidden'); // Hide input section initially
+             introCard.classList.add('hidden'); // Keep input section visible
              handleResearchEnd(); // Ensure button/state is reset
              // researchTopicInput.value = ''; // Optional: Clear input
         }
@@ -706,6 +930,28 @@
              }
         }
 
+        function updateTimelineStep(index, title, description, status) {
+            const steps = progressSteps.children;
+            if (index >= 0 && index < steps.length) {
+                const step = steps[index];
+                
+                if (title) {
+                    const titleElem = step.querySelector('.step-title');
+                    if (titleElem) titleElem.textContent = title;
+                }
+                
+                if (description) {
+                    const descElem = step.querySelector('.step-description');
+                    if (descElem) descElem.textContent = description;
+                }
+                
+                if (status) {
+                    const indicatorElem = step.querySelector('.timeline-indicator');
+                    if (indicatorElem) indicatorElem.innerHTML = getStatusIndicator(status);
+                }
+            }
+        }
+
         function getStatusIndicator(status) {
              // Use Tailwind classes for styling indicators
              let baseClasses = "w-6 h-6 rounded-full flex items-center justify-center";
@@ -761,6 +1007,7 @@
              const sources = stats.sources_consulted || 'N/A';
              const words = stats.word_count || 'N/A';
              const timeStr = `${minutes}m ${seconds}s`;
+             const agentsUsed = selectedAgents.length;
 
              researchStats.innerHTML = `
                  <div class="grid grid-cols-2 gap-4">
@@ -781,6 +1028,39 @@
                          <div class="text-sm text-gray-600 dark:text-gray-400">Total Time</div>
                      </div>
                  </div>
+                 <div class="mt-4 bg-gray-100 dark:bg-dark-input rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                     <div class="flex items-center justify-between mb-2">
+                         <div class="text-sm font-medium">MCP Agents Used</div>
+                         <div class="text-sm font-bold text-primary">${agentsUsed}</div>
+                     </div>
+                     <div class="flex flex-wrap gap-2">
+                         ${selectedAgents.map(agent => {
+                             let bgColor, textColor;
+                             switch(agent) {
+                                 case 'web-search':
+                                     bgColor = 'bg-blue-100 dark:bg-blue-900/30';
+                                     textColor = 'text-blue-800 dark:text-blue-300';
+                                     break;
+                                 case 'data-analysis':
+                                     bgColor = 'bg-green-100 dark:bg-green-900/30';
+                                     textColor = 'text-green-800 dark:text-green-300';
+                                     break;
+                                 case 'synthesis':
+                                     bgColor = 'bg-purple-100 dark:bg-purple-900/30';
+                                     textColor = 'text-purple-800 dark:text-purple-300';
+                                     break;
+                                 case 'fact-checking':
+                                     bgColor = 'bg-yellow-100 dark:bg-yellow-900/30';
+                                     textColor = 'text-yellow-800 dark:text-yellow-300';
+                                     break;
+                                 default:
+                                     bgColor = 'bg-gray-100 dark:bg-gray-800';
+                                     textColor = 'text-gray-800 dark:text-gray-300';
+                             }
+                             return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${bgColor} ${textColor}">${agent.replace('-', ' ')}</span>`;
+                         }).join('')}
+                     </div>
+                 </div>
              `;
          }
 
@@ -799,7 +1079,6 @@
                  </div>
              `).join('');
          }
-
 
         function copyResults() {
             const markdownContent = researchContent.getAttribute('data-markdown');
