@@ -1,26 +1,16 @@
 {
   "version": 2,
+  "public": false,
   "builds": [
-    {
-      "src": "api/research.py",
-      "use": "@vercel/python",
-      "config": {
-         "maxLambdaSize": "50mb"
-       }
-    }
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "api/**/*.js", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/api/research",
-      "dest": "api/research.py"
-    },
-    {
-       "src": "/(.*)",
-       "dest": "/index.html"
-     }
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ],
-   "env": {
-     "FIREWORKS_API_KEY": "FIREWORKS_API_KEY",
-     "PERPLEXITY_API_KEY": "PERPLEXITY_API_KEY"
-   }
+  "env": {
+    "FIREWORKS_API_KEY": "@fireworks_api_key",
+    "PERPLEXITY_API_KEY": "@perplexity_api_key"
+  }
 }
