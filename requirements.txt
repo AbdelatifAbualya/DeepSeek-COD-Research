@@ -2,6 +2,7 @@ fastapi
 uvicorn
 httpx
 pydantic
-openai # Add this line
+openai>=1.0.0
 python-dotenv
-# Add other libraries if used (e.g., beautifulsoup4 for scraping)
+mcp-agent-std>=0.1.0
+beautifulsoup4
